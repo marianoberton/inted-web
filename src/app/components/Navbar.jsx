@@ -11,8 +11,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-
-  // Determina si la página es la home o cualquiera de las páginas con el navbar transparente
   const isTransparentPage = ['/', '/consultoria-licitaciones', '/proyectos-constructivos'].includes(pathname);
 
   useEffect(() => {
@@ -32,14 +30,14 @@ export default function Navbar() {
   }, [isTransparentPage]);
 
   const navItems = [
+    { name: 'Quiénes Somos', path: '/quienes-somos' },
     {
       name: 'Áreas de Práctica',
       dropdown: [
         { name: 'Licitaciones Públicas y/o Privadas', path: '/consultoria-licitaciones' },
         { name: 'Desarrollo de Proyectos Constructivos', path: '/proyectos-constructivos' }
       ]
-    },
-    { name: 'Quiénes Somos', path: '/quienes-somos' },
+    },    
     { name: 'Licitaciones', path: '/licitaciones' },
     { name: 'Novedades', path: '/novedades' },
   ];
@@ -47,13 +45,13 @@ export default function Navbar() {
   return (
     <header className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 py-2 flex items-center justify-between">
-        <div className="w-20">
+        <div className="w-28 md:w-36"> {/* Ajustamos el tamaño del logo */}
           <Link href="/">
             <Image
-              src={scrolled ? "/images/azul3.png" : "/images/blanco3.png"}
+              src={scrolled ? (window.innerWidth < 768 ? "/images/azul3.png" : "/images/azul2.png") : (window.innerWidth < 768 ? "/images/blanco3.png" : "/images/blanco2.png")}
               alt="Logo"
-              width={80}
-              height={40}
+              width={window.innerWidth < 768 ? 100 : 180}  
+              height={window.innerWidth < 768 ? 50 : 90}  
             />
           </Link>
         </div>
