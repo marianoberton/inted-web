@@ -10,8 +10,21 @@ import { usePathname } from 'next/navigation';
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false); // Nuevo estado para manejar la versión móvil
   const pathname = usePathname();
   const isTransparentPage = ['/', '/consultoria-licitaciones', '/proyectos-constructivos'].includes(pathname);
+
+  useEffect(() => {
+    // Esto asegura que solo accedemos a window en el cliente
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Actualiza el estado según el tamaño de la ventana
+    };
+
+    handleResize(); // Comprobar el tamaño al montar el componente
+    window.addEventListener('resize', handleResize); // Escuchar cambios de tamaño de ventana
+
+    return () => window.removeEventListener('resize', handleResize); // Limpiar el listener al desmontar
+  }, []);
 
   useEffect(() => {
     if (isTransparentPage) {
@@ -48,10 +61,10 @@ export default function Navbar() {
         <div className="w-28 md:w-36"> {/* Ajustamos el tamaño del logo */}
           <Link href="/">
             <Image
-              src={scrolled ? (window.innerWidth < 768 ? "/images/azul3.png" : "/images/azul2.png") : (window.innerWidth < 768 ? "/images/blanco3.png" : "/images/blanco2.png")}
+              src={scrolled ? (isMobile ? "/images/azul3.png" : "/images/azul2.png") : (isMobile ? "/images/blanco3.png" : "/images/blanco2.png")}
               alt="Logo"
-              width={window.innerWidth < 768 ? 100 : 180}  
-              height={window.innerWidth < 768 ? 50 : 90}  
+              width={isMobile ? 100 : 180}  
+              height={isMobile ? 50 : 90}  
             />
           </Link>
         </div>
