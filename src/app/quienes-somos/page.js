@@ -10,7 +10,7 @@ const companyFeatures = [
   {
     icon: Users,
     title: "Equipo Multidisciplinario",
-    description: "Contamos con un equipo diverso que combina habilidades técnicas, legales y creativas para ofrecer soluciones completas."
+    description: "Contamos con un equipo de profesionales que combina habilidades técnicas, legales y constructivas para ofrecer soluciones integrales"
   },
   {
     icon: TrendingUp,
@@ -59,7 +59,7 @@ export default function SobreNosotros() {
           <div className="relative bg-black bg-opacity-60 p-8 md:p-12">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">Inted</h1>
             <p className="text-xl text-gray-200 mb-6">
-              Inted es una consultora joven con una visión innovadora en el ámbito de las licitaciones y los proyectos constructivos.
+            Inted es una consultora innovadora que brinda un asesoramiento integral en el ámbito de proyectos constructivos y licitaciones públicas y/o privadas, garantizando el cumplimiento normativo en cada etapa del proceso.
             </p>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function SobreNosotros() {
           className="mb-16 text-center max-w-3xl mx-auto"
         >
           <p className="text-2xl text-gray-700 mb-6 font-light leading-relaxed">
-            Nuestra misión es acompañar a nuestros clientes en cada paso, desde la planificación hasta la ejecución, ofreciendo soluciones efectivas y adaptadas a sus necesidades.
+          Nuestra misión es acompañar a nuestros clientes en cada etapa de su proyecto, desde la planificación hasta la ejecución, ofreciendo soluciones que se adapten a sus necesidades.
           </p>
         </motion.div>
 
@@ -137,7 +137,7 @@ export default function SobreNosotros() {
           className="text-center max-w-3xl mx-auto"
         >
           <p className="text-2xl text-gray-700 font-light leading-relaxed">
-            Estamos comprometidos con el crecimiento y el éxito de nuestros clientes, aportando una perspectiva fresca y un enfoque centrado en la calidad y la eficiencia.
+          Estamos comprometidos con el crecimiento y el éxito de nuestros clientes, aportando un enfoque centrado en la calidad y la eficiencia.
           </p>
         </motion.div>
       </motion.div>

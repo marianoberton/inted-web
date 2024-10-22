@@ -18,10 +18,10 @@ export default function HeroSection() {
 
       <div className="relative z-10 container mx-auto px-4 pt-32 pb-16 flex flex-col items-start min-h-screen justify-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 max-w-2xl">
-          Asesoría en Contrataciones Públicas
+        Gestión de proyectos públicos y/o privados
         </h1>
         <p className="text-lg md:text-xl text-white mb-8 max-w-xl">
-          Proveemos un acompañamiento especializado en todas las etapas de los procesos licitatorios, garantizando un abordaje técnico y jurídico sólido, con un enfoque transparente y ajustado a la normativa vigente.
+        Brindamos asesoramiento integral en materia de gestión de proyectos constructivos y ejecución de contrataciones públicas
         </p>
       </div>
     </div>

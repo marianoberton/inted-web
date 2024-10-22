@@ -43,13 +43,14 @@ export default function CompanyOverview() {
             className="text-lg text-[#1b293f] mb-6 leading-relaxed"
             variants={textVariants}
           >
-            Inted es una consultora joven e innovadora que brinda un asesoramiento integral en el ámbito de las licitaciones y los proyectos constructivos. Nos enfocamos en transformar desafíos complejos en oportunidades, asegurando el cumplimiento de normativas y el éxito de nuestros clientes en cada etapa del proceso.
+            Inted es una consultora  innovadora que brinda un asesoramiento integral en el ámbito de  proyectos constructivos y licitaciones públicas y/o privadas, garantizando el cumplimiento normativo en cada etapa del proceso.
           </motion.p>
           <motion.p
             className="text-lg text-[#1b293f] mb-8 leading-relaxed"
             variants={textVariants}
           >
-            Ofrecemos un amplio rango de servicios, incluyendo el análisis de factibilidad, gestoría de trámites y la consultoría en desarrollo de proyectos constructivos y licitaciones públicas y privadas. Nuestro equipo multidisciplinario combina experiencia y un enfoque orientado al crecimiento para garantizar resultados efectivos.
+            
+Ofrecemos un amplio rango de servicios, incluyendo la gestoría de trámites constructivos, habilitaciones comerciales y confección de ofertas para licitaciones públicas y privadas. Contamos con un equipo multidisciplinario que combina experiencia en el ámbito público/privado.
           </motion.p>
           <motion.div variants={textVariants}>
             <Button
