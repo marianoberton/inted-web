@@ -1,8 +1,11 @@
+// pages/ConsultoriaProyectosConstructivos.js
+
 "use client";
 
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Building, Ruler, Clipboard, Briefcase, HardHat, Home, FileText, CheckCircle, ArrowRight, FileCheck } from 'lucide-react';
+import IconShowcase from '../components/IconShowcase'; // Asegúrate de la ruta correcta
 
 const servicios = [
   {
@@ -112,6 +115,8 @@ const beneficios = [
   "Actualización continua mediante informes semanales, proporcionando transparencia y tranquilidad al cliente."
 ];
 
+
+
 export default function ConsultoriaProyectosConstructivos() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
@@ -129,9 +134,12 @@ export default function ConsultoriaProyectosConstructivos() {
           </p>
         </div>
         <div className="flex-1 w-full h-full md:h-auto">
-            <div className="w-full h-80 bg-cover bg-center rounded-lg shadow-lg" style={{ backgroundImage: "url('/images/proyectos.jpg')" }}></div>
+          <div className="w-full h-80 bg-cover bg-center rounded-lg shadow-lg" style={{ backgroundImage: "url('/images/proyectos.jpg')" }}></div>
         </div>
       </motion.div>
+
+      {/* Icon Showcase Section */}
+      <IconShowcase />
 
       {/* Services Section */}
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">

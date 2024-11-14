@@ -3,7 +3,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FileText, PenTool, FileCheck, HardHat, ArrowRight, CheckCircle } from 'lucide-react';
+import IconShowcaseLicitaciones from '../components/IconShowcaseLicitaciones'; // Importación con el nombre correcto del archivo
 
+// Servicios de documentación licitatoria
 const servicios = [
   {
     icon: FileText,
@@ -52,6 +54,7 @@ const servicios = [
   }
 ];
 
+// Beneficios de la consultoría en licitaciones
 const beneficios = [
   "Experiencia en múltiples industrias, asegurando un asesoramiento integral y especializado.",
   "Alto porcentaje de éxito en la adjudicación de proyectos.",
@@ -79,6 +82,9 @@ export default function ConsultoriaLicitaciones() {
           <div className="w-full h-80 bg-cover bg-center rounded-lg shadow-lg" style={{ backgroundImage: "url('/images/licitaciones.jpg')" }}></div>
         </div>
       </motion.div>
+
+      {/* Showcase de Servicios Licitatorios en formato circular */}
+      <IconShowcaseLicitaciones />
 
       {/* Services Section */}
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
