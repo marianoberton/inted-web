@@ -20,7 +20,6 @@ interface FiltersProps {
 const Filters: React.FC<FiltersProps> = ({ filters, handleFilterChange, categorias, rubros, tiposContratacion }) => {
   const [filteredRubros, setFilteredRubros] = useState<{ categoria: string }[]>([]);
 
-  // Actualiza el estado solo cuando cambie la categoría o los rubros
   useEffect(() => {
     const newRubros = rubros.filter((rubro) => {
       return !filters.categoria || rubro.categoria === filters.categoria;
@@ -78,7 +77,7 @@ const Filters: React.FC<FiltersProps> = ({ filters, handleFilterChange, categori
       {/* Filtro por Fecha Inicio */}
       <DatePicker
         selected={filters.fechaInicio ? new Date(filters.fechaInicio) : null}
-        onChange={(date) => handleFilterChange('fechaInicio', date ? date.toISOString().split('T')[0] : '')}
+        onChange={(date: Date | null) => handleFilterChange('fechaInicio', date ? date.toISOString().split('T')[0] : '')}
         placeholderText="Fecha inicio"
         className="border p-2 rounded w-full text-black"
         dateFormat="yyyy-MM-dd"
@@ -87,7 +86,7 @@ const Filters: React.FC<FiltersProps> = ({ filters, handleFilterChange, categori
       {/* Filtro por Fecha Fin */}
       <DatePicker
         selected={filters.fechaFin ? new Date(filters.fechaFin) : null}
-        onChange={(date) => handleFilterChange('fechaFin', date ? date.toISOString().split('T')[0] : '')}
+        onChange={(date: Date | null) => handleFilterChange('fechaFin', date ? date.toISOString().split('T')[0] : '')}
         placeholderText="Fecha fin"
         className="border p-2 rounded w-full text-black"
         dateFormat="yyyy-MM-dd"
