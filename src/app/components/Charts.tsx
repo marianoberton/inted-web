@@ -1,9 +1,10 @@
-import React from 'react'
-import { Bar, Line, Pie } from "react-chartjs-2"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import { es } from "date-fns/locale"
+import React from 'react';
+import { Bar, Line, Pie } from "react-chartjs-2";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { es } from "date-fns/locale";
+import 'chartjs-adapter-date-fns';
 
-export default function Charts({ temporalLabels, temporalValues, categoriaData, reparticionData = {} }) {
+export default function Charts({ temporalLabels = [], temporalValues = [], categoriaData = {}, reparticionData = {} }) {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
@@ -15,11 +16,11 @@ export default function Charts({ temporalLabels, temporalValues, categoriaData, 
           <CardContent>
             <Bar
               data={{
-                labels: Object.keys(categoriaData || {}),
+                labels: Object.keys(categoriaData),
                 datasets: [
                   {
                     label: "Monto (ARS)",
-                    data: Object.values(categoriaData || {}),
+                    data: Object.values(categoriaData),
                     backgroundColor: "rgba(75, 192, 192, 0.6)",
                   },
                 ],
@@ -44,11 +45,11 @@ export default function Charts({ temporalLabels, temporalValues, categoriaData, 
           <CardContent>
             <Bar
               data={{
-                labels: Object.keys(reparticionData || {}),
+                labels: Object.keys(reparticionData),
                 datasets: [
                   {
                     label: "Monto (ARS)",
-                    data: Object.values(reparticionData || {}),
+                    data: Object.values(reparticionData),
                     backgroundColor: "rgba(153, 102, 255, 0.6)",
                   },
                 ],
@@ -75,10 +76,10 @@ export default function Charts({ temporalLabels, temporalValues, categoriaData, 
           <CardContent>
             <Pie
               data={{
-                labels: Object.keys(categoriaData || {}),
+                labels: Object.keys(categoriaData),
                 datasets: [
                   {
-                    data: Object.values(categoriaData || {}),
+                    data: Object.values(categoriaData),
                     backgroundColor: [
                       "rgba(255, 159, 64, 0.6)",
                       "rgba(54, 162, 235, 0.6)",
@@ -101,11 +102,11 @@ export default function Charts({ temporalLabels, temporalValues, categoriaData, 
           <CardContent>
             <Line
               data={{
-                labels: temporalLabels || [],
+                labels: temporalLabels,
                 datasets: [
                   {
                     label: "Número de Licitaciones",
-                    data: temporalValues || [],
+                    data: temporalValues,
                     fill: false,
                     borderColor: "rgba(75, 192, 192, 1)",
                     tension: 0.1,
@@ -137,5 +138,5 @@ export default function Charts({ temporalLabels, temporalValues, categoriaData, 
         </Card>
       </div>
     </>
-  )
+  );
 }
