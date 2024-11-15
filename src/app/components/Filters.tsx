@@ -1,77 +1,99 @@
-import React, { useEffect, useState } from 'react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+import React, { useEffect, useState } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-export default function Filters({ filters, handleFilterChange, categorias, rubros, tiposContratacion }) {
-  const [filteredRubros, setFilteredRubros] = useState([])
+interface FiltersProps {
+  filters: {
+    categoria: string;
+    rubro: string;
+    tipoContratacion: string;
+    fechaInicio: string | null;
+    fechaFin: string | null;
+  };
+  handleFilterChange: (key: string, value: string) => void;
+  categorias: string[];
+  rubros: { categoria: string }[];
+  tiposContratacion: string[];
+}
 
-  // Actualizar los rubros disponibles en función de la categoría seleccionada
+const Filters: React.FC<FiltersProps> = ({ filters, handleFilterChange, categorias, rubros, tiposContratacion }) => {
+  const [filteredRubros, setFilteredRubros] = useState<{ categoria: string }[]>([]);
+
+  // Actualiza el estado solo cuando cambie la categoría o los rubros
   useEffect(() => {
     const newRubros = rubros.filter((rubro) => {
-      return !filters.categoria || rubro.categoria === filters.categoria
-    })
-    setFilteredRubros(newRubros)
-  }, [filters.categoria, rubros])
+      return !filters.categoria || rubro.categoria === filters.categoria;
+    });
+    setFilteredRubros(newRubros);
+  }, [filters.categoria, rubros]);
 
   return (
     <div className="mb-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-      <Select onValueChange={(value) => handleFilterChange('categoria', value === "all" ? "" : value)} value={filters.categoria}>
+      {/* Filtro por Categoría */}
+      <Select value={filters.categoria} onValueChange={(value) => handleFilterChange('categoria', value === "all" ? "" : value)}>
         <SelectTrigger>
           <SelectValue placeholder="Filtrar por categoría" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todas las categorías</SelectItem>
-          {categorias.map((categoria) => (
-            <SelectItem key={categoria} value={categoria}>
+          {categorias.map((categoria, index) => (
+            <SelectItem key={`${categoria}-${index}`} value={categoria}>
               {categoria}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Select onValueChange={(value) => handleFilterChange('rubro', value === "all" ? "" : value)} value={filters.rubro}>
+      {/* Filtro por Rubro */}
+      <Select value={filters.rubro} onValueChange={(value) => handleFilterChange('rubro', value === "all" ? "" : value)}>
         <SelectTrigger>
           <SelectValue placeholder="Filtrar por rubro" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos los rubros</SelectItem>
-          {filteredRubros.map((rubro) => (
-            <SelectItem key={rubro} value={rubro}>
-              {rubro}
+          {filteredRubros.map((rubro, index) => (
+            <SelectItem key={`${rubro.categoria}-${index}`} value={rubro.categoria}>
+              {rubro.categoria}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Select onValueChange={(value) => handleFilterChange('tipoContratacion', value === "all" ? "" : value)} value={filters.tipoContratacion}>
+      {/* Filtro por Tipo de Contratación */}
+      <Select value={filters.tipoContratacion} onValueChange={(value) => handleFilterChange('tipoContratacion', value === "all" ? "" : value)}>
         <SelectTrigger>
           <SelectValue placeholder="Filtrar por tipo de contratación" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos los tipos</SelectItem>
-          {tiposContratacion.map((tipo) => (
-            <SelectItem key={tipo} value={tipo}>
+          {tiposContratacion.map((tipo, index) => (
+            <SelectItem key={`${tipo}-${index}`} value={tipo}>
               {tipo}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
+      {/* Filtro por Fecha Inicio */}
       <DatePicker
         selected={filters.fechaInicio ? new Date(filters.fechaInicio) : null}
         onChange={(date) => handleFilterChange('fechaInicio', date ? date.toISOString().split('T')[0] : '')}
         placeholderText="Fecha inicio"
-        className="border p-2 rounded w-full text-black" // Añadido text-black para hacer visible el texto
+        className="border p-2 rounded w-full text-black"
         dateFormat="yyyy-MM-dd"
       />
+
+      {/* Filtro por Fecha Fin */}
       <DatePicker
         selected={filters.fechaFin ? new Date(filters.fechaFin) : null}
         onChange={(date) => handleFilterChange('fechaFin', date ? date.toISOString().split('T')[0] : '')}
         placeholderText="Fecha fin"
-        className="border p-2 rounded w-full text-black" // Añadido text-black para hacer visible el texto
+        className="border p-2 rounded w-full text-black"
         dateFormat="yyyy-MM-dd"
       />
     </div>
-  )
-}
+  );
+};
+
+export default Filters;
