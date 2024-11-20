@@ -174,26 +174,7 @@ export default function ConsultoriaProyectosConstructivos() {
             );
           })}
         </div>
-      </div>
-
-      {/* Benefits Section */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8"
-      >
-        <h2 className="text-3xl font-bold text-[#1b293f] mb-8 text-center">Beneficios de Nuestros Servicios</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {beneficios.map((beneficio, index) => (
-            <div key={index} className="flex items-start p-6 bg-white rounded-lg shadow-md">
-              <CheckCircle className="w-8 h-8 text-[#1b293f] mr-4 flex-shrink-0" />
-              <span className="text-lg text-gray-700">{beneficio}</span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
+      </div>      
     </div>
   );
 }
