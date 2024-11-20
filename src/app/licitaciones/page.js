@@ -170,13 +170,7 @@ export default function LicitacionesPage() {
                   <p className="text-sm text-gray-600">Categoría: {licitacion.categoria}</p>
                   <p className="text-sm text-gray-600">Tipo de Contratación: {licitacion.tipoContratacion}</p>
                   <p className="text-sm text-gray-600">Apertura: {licitacion.fechaApertura}</p>
-                  <p className="text-sm text-gray-600">Monto: ${licitacion.monto.toLocaleString("es-AR")}</p>
-                  {/* Botón "Contáctanos" para cada licitación */}
-                  <div className="mt-2">
-                    <Link href="/contacto" className="text-[#1b293f] hover:underline font-semibold">
-                      Contáctanos <ChevronRight className="inline h-4 w-4" />
-                    </Link>
-                  </div>
+                  <p className="text-sm text-gray-600">Monto: ${licitacion.monto.toLocaleString("es-AR")}</p>                  
                 </div>
               ))
             ) : (
