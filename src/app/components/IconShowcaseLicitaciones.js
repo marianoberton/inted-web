@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileText, ClipboardList, Edit, Gavel, TrendingUp } from 'lucide-react'
+import { FileText, ClipboardCheck, Edit, Gavel, TrendingUp } from 'lucide-react'
 
 const Icons = {
   FileText,
-  ClipboardList,
+  ClipboardCheck,
   Edit,
   Gavel,
   TrendingUp,
@@ -19,7 +19,7 @@ const licitacionesServices = [
     content: "Elaboración de pliegos de bases y condiciones generales y particulares, especificaciones técnicas, circulares aclaratorias y/o modificatorias, dictámenes de evaluación de ofertas, contratos administrativos y/o comerciales, actas de recepción y certificados de liquidación final.",
   },
   {
-    icon: 'ClipboardList',
+    icon: 'ClipboardCheck',
     title: "Gestión de Procedimientos Licitatorios",
     content: "Gestión de invitaciones a potenciales oferentes, análisis de consultas y elaboración de respuestas, gestión del acto de apertura de ofertas, evaluación de ofertas y solicitud de aclaraciones, asesoramiento durante la ejecución contractual.",
   },
@@ -106,7 +106,6 @@ export default function LicitacionesServiceShowcase() {
               className="flex flex-col items-center justify-center text-center p-6 max-w-[300px]"
             >
               <h3 className="text-xl font-semibold mb-2 md:mb-4">{licitacionesServices[currentIndex].title}</h3>
-              {/* Para desktop muestra título y contenido */}
               <p className="hidden md:block text-sm">{licitacionesServices[currentIndex].content}</p>
             </motion.div>
           </AnimatePresence>

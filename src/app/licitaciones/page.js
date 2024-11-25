@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
+import { Search, Calendar, DollarSign, Briefcase, Tag } from 'lucide-react';
 import Link from 'next/link';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
@@ -13,10 +13,8 @@ export default function LicitacionesPage() {
   const [filtroTipoContratacion, setFiltroTipoContratacion] = useState('');
   const [filtroNombre, setFiltroNombre] = useState('');
 
-  // Fecha de referencia para excluir licitaciones con estado "En curso/Terminada"
   const fechaReferencia = new Date("2024-11-01");
 
-  // Función para procesar el monto en un número
   const parseMonto = (montoStr) => {
     if (!montoStr || typeof montoStr !== "string") return 0;
     let montoClean = montoStr.replace(/[^\d.,-]/g, "").trim();
@@ -26,7 +24,6 @@ export default function LicitacionesPage() {
     return isNaN(monto) ? 0 : monto;
   };
 
-  // Función para procesar la fecha
   const parseFecha = (fechaStr) => {
     if (!fechaStr) return "Fecha no disponible";
     const [datePart] = fechaStr.split(" ");
@@ -34,7 +31,6 @@ export default function LicitacionesPage() {
     return `${day}/${month}/${year}`;
   };
 
-  // Función para convertir a formato Title Case
   const toTitleCase = (str) => {
     return str
       .toLowerCase()
@@ -95,7 +91,6 @@ export default function LicitacionesPage() {
     fetchLicitaciones();
   }, []);
 
-  // Filtrado de licitaciones basado en los filtros seleccionados
   const filtrarLicitaciones = () => {
     return licitaciones.filter((licitacion) => {
       const categoriaCoincide = filtroCategoria ? licitacion.categoria === filtroCategoria : true;
@@ -116,69 +111,131 @@ export default function LicitacionesPage() {
   const licitacionesFiltradas = filtrarLicitaciones();
 
   return (
-    <div className="bg-gray-100 pt-[calc(80px+2rem)] pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-24 pb-16">
       <div className="container mx-auto px-4">
-        {/* Título */}
-        <h1 className="text-4xl font-bold text-[#1b293f] mb-8 text-center">Próximas Licitaciones (datos 1/11/2024)</h1>
+        <motion.h1 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl md:text-5xl font-bold text-[#1b293f] mb-6 text-center"
+        >
+          Próximas Licitaciones
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-xl text-center text-gray-600 mb-12"
+        >
+          Datos actualizados al 1/11/2024
+        </motion.p>
 
-        {/* Filtros */}
-        <div className="flex flex-wrap justify-center mb-8 space-x-4">
-          <select
-            value={filtroCategoria}
-            onChange={(e) => setFiltroCategoria(e.target.value)}
-            className="px-4 py-2 rounded shadow text-[#1b293f] bg-white border border-gray-300"
-          >
-            <option value="">Filtrar por Categoría</option>
-            {[...new Set(licitaciones.map((data) => data.categoria))].map((categoria) => (
-              <option key={categoria} value={categoria}>
-                {categoria}
-              </option>
-            ))}
-          </select>
-          <select
-            value={filtroTipoContratacion}
-            onChange={(e) => setFiltroTipoContratacion(e.target.value)}
-            className="px-4 py-2 rounded shadow text-[#1b293f] bg-white border border-gray-300"
-          >
-            <option value="">Filtrar por Tipo de Contratación</option>
-            {[...new Set(licitaciones.map((data) => data.tipoContratacion))].map((tipo) => (
-              <option key={tipo} value={tipo}>
-                {tipo}
-              </option>
-            ))}
-          </select>
-          <input
-            type="text"
-            value={filtroNombre}
-            onChange={(e) => setFiltroNombre(e.target.value)}
-            placeholder="Buscar por nombre"
-            className="px-4 py-2 rounded shadow text-[#1b293f] bg-white border border-gray-300"
-          />
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="bg-white rounded-xl shadow-lg p-6 mb-12"
+        >
+          <h2 className="text-2xl font-semibold text-[#1b293f] mb-6">Filtros de Búsqueda</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label htmlFor="categoria" className="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+              <select
+                id="categoria"
+                value={filtroCategoria}
+                onChange={(e) => setFiltroCategoria(e.target.value)}
+                className="w-full px-4 py-2 rounded-md shadow-sm text-[#1b293f] bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1b293f]"
+              >
+                <option value="">Todas las categorías</option>
+                {[...new Set(licitaciones.map((data) => data.categoria))].map((categoria) => (
+                  <option key={categoria} value={categoria}>
+                    {categoria}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="tipoContratacion" className="block text-sm font-medium text-gray-700 mb-1">Tipo de Contratación</label>
+              <select
+                id="tipoContratacion"
+                value={filtroTipoContratacion}
+                onChange={(e) => setFiltroTipoContratacion(e.target.value)}
+                className="w-full px-4 py-2 rounded-md shadow-sm text-[#1b293f] bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1b293f]"
+              >
+                <option value="">Todos los tipos</option>
+                {[...new Set(licitaciones.map((data) => data.tipoContratacion))].map((tipo) => (
+                  <option key={tipo} value={tipo}>
+                    {tipo}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">Buscar por nombre</label>
+              <div className="relative">
+                <input
+                  id="nombre"
+                  type="text"
+                  value={filtroNombre}
+                  onChange={(e) => setFiltroNombre(e.target.value)}
+                  placeholder="Nombre de la licitación"
+                  className="w-full px-4 py-2 rounded-md shadow-sm text-[#1b293f] bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1b293f] pl-10"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-        {/* Contenido */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {licitacionesFiltradas.length > 0 ? (
-              licitacionesFiltradas.map((licitacion) => (
-                <div key={licitacion.id} className="bg-white rounded-lg shadow-lg p-6">
-                  <h2 className="text-xl font-bold text-[#1b293f] mb-2">{licitacion.nombre}</h2>
-                  <p className="text-sm text-gray-600">Categoría: {licitacion.categoria}</p>
-                  <p className="text-sm text-gray-600">Tipo de Contratación: {licitacion.tipoContratacion}</p>
-                  <p className="text-sm text-gray-600">Apertura: {licitacion.fechaApertura}</p>
-                  <p className="text-sm text-gray-600">Monto: ${licitacion.monto.toLocaleString("es-AR")}</p>                  
-                </div>
-              ))
-            ) : (
-              <p className="text-center text-gray-600 col-span-full">No se encontraron licitaciones para los filtros seleccionados.</p>
-            )}
-          </div>
+          {licitacionesFiltradas.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {licitacionesFiltradas.map((licitacion, index) => (
+                <motion.div
+                  key={licitacion.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden"
+                >
+                  <div className="p-6 border-b border-gray-200">
+                    <h3 className="text-xl font-bold text-[#1b293f] mb-2">{licitacion.nombre}</h3>
+                    <div className="flex items-center text-gray-600 mb-2">
+                      <Tag size={16} className="mr-2" />
+                      <span className="text-sm">{licitacion.categoria}</span>
+                    </div>
+                    <div className="flex items-center text-gray-600 mb-2">
+                      <Briefcase size={16} className="mr-2" />
+                      <span className="text-sm">{licitacion.tipoContratacion}</span>
+                    </div>
+                  </div>
+                  <div className="p-6 bg-gray-50">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center text-gray-600">
+                        <Calendar size={16} className="mr-2" />
+                        <span className="text-sm">{licitacion.fechaApertura}</span>
+                      </div>
+                      <div className="flex items-center text-gray-600">
+                        <DollarSign size={16} className="mr-2" />
+                        {/* Eliminar el símbolo $ antes del monto */}
+                        <span className="text-sm font-semibold">{licitacion.monto.toLocaleString("es-AR")}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-gray-600 text-xl">No se encontraron licitaciones para los filtros seleccionados.</p>
+          )}
         </motion.div>
       </div>
     </div>
   );
 }
+

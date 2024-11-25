@@ -52,7 +52,7 @@ export default function Navbar() {
       ]
     },    
     { name: 'Licitaciones', path: '/licitaciones' },
-    { name: 'Novedades', path: '/novedades' },
+    
   ];
 
   return (
