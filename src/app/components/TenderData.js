@@ -160,7 +160,7 @@ export default function TenderPreview() {
                         href="/licitaciones"
                         className="inline-flex items-center bg-[#1b293f] text-white hover:bg-[#bfbfbf] hover:text-[#1b293f] transition-colors duration-200 px-4 py-2 rounded"
                       >
-                        Ver todas las licitaciones <ChevronRight className="ml-2 h-4 w-4" />
+                        Ver licitaciones Activas <ChevronRight className="ml-2 h-4 w-4" />
                       </Link>
                     </div>
                   </motion.div>

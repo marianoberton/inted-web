@@ -109,8 +109,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Inted. Todos los derechos reservados.
           </p>
           <p className="text-sm text-[#bfbfbf] text-center">
-            Sitio desarrollado por Inted para mejorar la experiencia en la
-            gestión de proyectos y licitaciones.
+            Sitio desarrollado por Inted
           </p>
         </div>
       </div>

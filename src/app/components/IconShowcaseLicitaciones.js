@@ -43,6 +43,16 @@ const licitacionesServices = [
 export default function LicitacionesServiceShowcase() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     if (!isHovered) {
@@ -53,16 +63,24 @@ export default function LicitacionesServiceShowcase() {
     }
   }, [isHovered])
 
-  const handleIconClick = (index) => {
-    setCurrentIndex(index)
+  const getIconPosition = (index) => {
+    const totalItems = licitacionesServices.length
+    const angle = (index / totalItems) * 2 * Math.PI - Math.PI / 2
+    const radius = isMobile ? 140 : 280
+    return {
+      x: Math.cos(angle) * radius,
+      y: Math.sin(angle) * radius
+    }
   }
 
   return (
-    <div className="relative container mx-auto py-16 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white">
-      <h2 className="text-3xl font-bold mb-4 text-center text-gray-800">Área de Licitaciones</h2>
+    <div className="relative container mx-auto py-16 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white px-4">
+      <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Área de Licitaciones</h2>
       
       <div
-        className="relative w-full max-w-[640px] h-[640px] flex items-center justify-center overflow-hidden"
+        className={`relative flex items-center justify-center ${
+          isMobile ? 'w-[300px] h-[300px]' : 'w-[640px] h-[640px]'
+        }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -72,30 +90,38 @@ export default function LicitacionesServiceShowcase() {
         
         {/* Círculos de navegación */}
         {licitacionesServices.map((service, index) => {
-          const angle = (index / licitacionesServices.length) * 2 * Math.PI - Math.PI / 2
-          const radius = 280
-          const x = Math.cos(angle) * radius
-          const y = Math.sin(angle) * radius
+          const { x, y } = getIconPosition(index)
           const Icon = Icons[service.icon]
-          
+
           return (
-            <motion.button
+            <button
               key={index}
-              onClick={() => handleIconClick(index)}
-              className={`absolute w-16 h-16 flex items-center justify-center rounded-full transition-all duration-300 ${
-                currentIndex === index 
-                  ? 'bg-[#1B293F] text-white' 
+              onClick={() => setCurrentIndex(index)}
+              className={`absolute flex items-center justify-center rounded-full transition-all duration-300 ${
+                currentIndex === index
+                  ? 'bg-[#1B293F] text-white shadow-lg'
                   : 'bg-white text-gray-600 hover:bg-[#1B293F] hover:text-white'
               }`}
-              style={{ transform: `translate(${x}px, ${y}px)` }}
+              style={{
+                transform: `translate(${x}px, ${y}px)`,
+                width: isMobile ? '42px' : '64px',
+                height: isMobile ? '42px' : '64px',
+                border: isMobile ? '2px solid #E5E7EB' : 'none', // Borde en mobile
+              }}
             >
-              {Icon && <Icon className="w-8 h-8" />}
-            </motion.button>
+              {Icon && (
+                <Icon
+                  className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'} transition-colors`}
+                />
+              )}
+            </button>
           )
         })}
 
         {/* Contenido Central */}
-        <div className="absolute inset-[80px] rounded-full bg-[#1B293F] shadow-lg flex items-center justify-center overflow-hidden text-white">
+        <div className={`absolute rounded-full bg-[#1B293F] shadow-lg flex items-center justify-center overflow-hidden text-white ${
+          isMobile ? 'inset-[40px]' : 'inset-[80px]'
+        }`} style={{ zIndex: 1 }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -103,10 +129,16 @@ export default function LicitacionesServiceShowcase() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.5 }}
-              className="flex flex-col items-center justify-center text-center p-6 max-w-[300px]"
+              className="flex flex-col items-center justify-center text-center p-4 md:p-6"
             >
-              <h3 className="text-xl font-semibold mb-2 md:mb-4">{licitacionesServices[currentIndex].title}</h3>
-              <p className="hidden md:block text-sm">{licitacionesServices[currentIndex].content}</p>
+              <h3 className={`${isMobile ? 'text-base' : 'text-xl'} font-semibold mb-2 md:mb-4`}>
+                {licitacionesServices[currentIndex].title}
+              </h3>
+              {!isMobile && (
+                <p className="text-sm">
+                  {licitacionesServices[currentIndex].content}
+                </p>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>

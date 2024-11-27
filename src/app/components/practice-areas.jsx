@@ -49,7 +49,7 @@ const PracticeArea = ({ title, image, link, services }) => (
       >
         <Link href={link} passHref>
           <Button className="bg-white text-black hover:bg-gray-200 transition-colors duration-300">
-            Explorar
+            Ver más
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </Link>
