@@ -10,7 +10,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [language, setLanguage] = useState("es"); // Estado para manejar el idioma
+  const [language, setLanguage] = useState("es");
   const pathname = usePathname();
   const isTransparentPage = [
     "/",
@@ -61,12 +61,8 @@ export default function Navbar() {
       ],
     },
     { name: "Licitaciones", path: "/licitaciones" },
-    { name: "Contacto", path: "/contacto" }, // "Contáctanos" agregado aquí
+    { name: "Contacto", path: "/contacto" },
   ];
-
-  const handleLanguageSwitch = () => {
-    setLanguage((prev) => (prev === "es" ? "en" : "es"));
-  };
 
   return (
     <header
@@ -151,36 +147,44 @@ export default function Navbar() {
             ))}
           </ul>
         </nav>
-        <div className="hidden md:flex w-20 justify-end">
-          {/* Language Switcher */}
-          <div
-            className={`flex items-center space-x-2 text-sm font-medium ${
-              scrolled ? "text-[#1b293f]" : "text-white"
-            } transition-colors duration-200`}
+        <div className="hidden md:flex items-center space-x-4">
+        {/* Language Switcher */}
+        <div className="flex items-center space-x-2">
+          <button
+            className={`text-sm font-medium ${
+              scrolled
+                ? language === "es"
+                  ? "font-bold underline text-[#1b293f]" // Estilo seleccionado en color sólido
+                  : "text-[#1b293f] hover:opacity-70"
+                : language === "es"
+                ? "font-bold underline text-white" // Estilo seleccionado en fondo transparente
+                : "text-white hover:opacity-70"
+            }`}
+            onClick={() => setLanguage("es")}
           >
-            {/* Botón Español */}
-            <button
-              className={`cursor-pointer transition-colors ${
-                language === "es" ? "font-bold underline" : "hover:opacity-70"
-              }`}
-              onClick={() => setLanguage("es")}
-            >
-              ES
-            </button>
-            {/* Separador */}
-            <span className="w-px h-4 bg-gray-400"></span>
-            {/* Botón Inglés */}
-            <button
-              className={`cursor-pointer transition-colors ${
-                language === "en" ? "font-bold underline" : "hover:opacity-70"
-              }`}
-              onClick={() => setLanguage("en")}
-            >
-              EN
-            </button>
-          </div>
-
+            ES
+          </button>
+          <span
+            className={`w-px h-4 ${
+              scrolled ? "bg-gray-400" : "bg-white" // Cambia el separador según el scroll
+            }`}
+          ></span>
+          <button
+            className={`text-sm font-medium ${
+              scrolled
+                ? language === "en"
+                  ? "font-bold underline text-[#1b293f]" // Estilo seleccionado en color sólido
+                  : "text-[#1b293f] hover:opacity-70"
+                : language === "en"
+                ? "font-bold underline text-white" // Estilo seleccionado en fondo transparente
+                : "text-white hover:opacity-70"
+            }`}
+            onClick={() => setLanguage("en")}
+          >
+            EN
+          </button>
         </div>
+      </div>
         <button
           className={`md:hidden ${scrolled ? "text-[#1b293f]" : "text-white"}`}
           onClick={() => setMenuOpen(!menuOpen)}
@@ -222,12 +226,30 @@ export default function Navbar() {
             ))}
           </ul>
           {/* Language Switcher in Mobile */}
-          <div
-            className="mt-4 cursor-pointer text-sm font-medium text-[#1b293f] hover:text-[#bfbfbf] transition-colors duration-200"
-            onClick={handleLanguageSwitch}
-          >
-            {language === "es" ? "Español" : "English"}
+          <div className="flex justify-center items-center space-x-4 mt-4">
+            <button
+              className={`text-sm font-medium ${
+                language === "es" 
+                  ? "font-bold underline text-[#1b293f]" 
+                  : "text-[#1b293f] hover:opacity-70"
+              }`}
+              onClick={() => setLanguage("es")}
+            >
+              ES
+            </button>
+            <span className="w-px h-4 bg-gray-400"></span>
+            <button
+              className={`text-sm font-medium ${
+                language === "en" 
+                  ? "font-bold underline text-[#1b293f]" 
+                  : "text-[#1b293f] hover:opacity-70"
+              }`}
+              onClick={() => setLanguage("en")}
+            >
+              EN
+            </button>
           </div>
+
         </div>
       )}
     </header>
