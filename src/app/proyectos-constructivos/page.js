@@ -5,101 +5,35 @@ import { motion } from "framer-motion";
 import {
   Building,
   Ruler,
-  Clipboard,
   Briefcase,
   HardHat,
   Home,
-  FileText,
-  CheckCircle,
-  ArrowRight,
   FileCheck,
+  Hammer,
+  Layers,
+  ArrowRight,
 } from "lucide-react";
 import IconShowcase from '../components/IconShowcase';
-
-
 
 const servicios = [
   {
     icon: Building,
     title: "Análisis de Factibilidad del Proyecto Constructivo",
     details: [
-      "Análisis integral de aspectos morfológicos e interiorismo",
+      "Análisis integral de aspectos morfológicos e interiorismo del anteproyecto",
       "Evaluación de usos requeridos",
       "Verificación de disposiciones del Código Urbanístico y de Edificación",
       "Informe de factibilidad de proyecto constructivo",
-      "Análisis integral del anteproyecto desde el punto de vista morfológico.",
-    ],
-  },
-  {
-    icon: Ruler,
-    title: "Plano de Mensura y Unificación",
-    details: [
-      "Adecuación del plano a formato municipal",
-      "Tramitación de informes de dominio",
-      "Seguimiento del trámite con informes semanales",
-      "Informe de subsanaciones y adecuaciones correspondientes",
-      "Seguimiento continuo del trámite con informes de situación semanal.",
-    ],
-  },
-  {
-    icon: Clipboard,
-    title: "Plano de Demolición",
-    details: [
-      "Elaboración del plano de demolición con antecedentes de cada parcela",
-      "Mediciones correspondientes (si se requieren)",
-      "Adecuación del plano a formato municipal",
-      "Seguimiento del trámite e informes de subsanaciones",
-      "Gestoría de la totalidad del trámite con acceso al inmueble.",
     ],
   },
   {
     icon: Briefcase,
     title: "Plano de Etapa de Proyecto y Permiso de Obra Civil",
     details: [
-      "Adecuación de planos de instalaciones al formato municipal",
-      "Tramitación de informes de dominio",
-      "Gestoría de la totalidad de los trámites.",
-    ],
-  },
-  {
-    icon: HardHat,
-    title: "Pedidos de Excavaciones y AVO",
-    details: [
-      "Gestión de trámites de excavaciones",
-      "Solicitud de AVO (Alta de Obra y Ejecución en TAD)",
-      "Seguimiento del trámite con reportes semanales.",
-    ],
-  },
-  {
-    icon: Home,
-    title: "Conforme a Obra (AVO 4)",
-    details: [
-      "Regularización de Obra en Contravención / Ajuste de Obra",
-      "Adecuación de planos de arquitectura de obra ejecutada",
-      "Tramitación de informes de dominio",
-      "Seguimiento del trámite y reportes semanales",
-      "Gestoría completa para la regularización de obra conforme a la normativa vigente",
-    ],
-  },
-  {
-    icon: FileText,
-    title: "Inicio y Final de Demolición",
-    details: [
-      "Adecuación del plano de arquitectura a formato municipal",
-      "Modificaciones de proyecto",
-      "Tramitación de informes de dominio y certificado de aptitud ambiental",
-      "Seguimiento del trámite con informes semanales",
-      "Gestoría integral de los trámites de inicio y final de demolición",
-    ],
-  },
-  {
-    icon: Clipboard,
-    title: "División en Propiedad Horizontal (MH)",
-    details: [
-      "Adecuación del plano a formato municipal",
-      "Tramitación de informes de dominio",
-      "Seguimiento del trámite e informes de subsanaciones",
-      "Gestoría completa de la división y adecuación del plano",
+      "Adecuación de planos de arquitectura al formato municipal",
+      "Tramitación de informes de dominio y certificados de aptitud ambiental",
+      "Modificaciones de Proyectos",
+      "Seguimiento continuo del trámite con informes semanales",
     ],
   },
   {
@@ -107,9 +41,59 @@ const servicios = [
     title: "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, etc.)",
     details: [
       "Adecuación de los planos de instalaciones al formato municipal",
-      "Tramitación de informes de dominio",
+      "Tramitación de informes de dominio y Certificados de Aptitud Ambiental",
+      "Seguimiento continuo del trámite e informes de subsanaciones",
+      "Conforme de obra de instalaciones. Incendio de obras instalaciones etc.",
+    ],
+  },
+  {
+    icon: Ruler,
+    title: "Plano de Mensura y Unificación",
+    details: [
+      "Adecuación del plano a formato municipal",
+      "Tramitación de informes de dominio",      
+      "Informe de subsanaciones y adecuaciones correspondientes",
+      "Seguimiento continuo del trámite con informes de situación semanal.",
+    ],
+  },
+  {
+    icon: Hammer,
+    title: "Plano de Demolición",
+    details: [
+      "Elaboración del plano de demolición con antecedentes de cada parcela",
+      "Mediciones correspondientes",
+      "Adecuación del plano a formato municipal",
       "Seguimiento del trámite e informes de subsanaciones",
-      "Gestión de planos de instalaciones específicos y adecuación normativa",
+    ],
+  },
+  {
+    icon: HardHat,
+    title: "Portal Director de Obra",
+    details: [
+      "Gestión de trámites de excavaciones",
+      "Gestión de trámites de demoliciones",
+      "Solicitud de alta de obra, cartel de obra, (AVO 1, 2 y 3)",
+      "Seguimiento continuo del trámite con informes semanales",
+    ],
+  },
+  {
+    icon: Home,
+    title: "Conforme a Obra (AVO 4)",
+    details: [
+      "Adecuación de planos de arquitectura de obra ejecutada a formato municipal",
+      "Tramitación de informes de dominio y certificados de aptitud ambiental",
+      "Regularización de Obra en Contravención y Ajuste de Obra",
+      "Seguimiento continuo del trámite con reportes semanales",
+    ],
+  },
+  {
+    icon: Layers,
+    title: "División en Propiedad Horizontal (MH)",
+    details: [
+      "Adecuación del plano a formato municipal",
+      "Tramitación de informes de dominio",
+      "Tramitación ante registro de la propiedad inmueble",
+      "Seguimiento del trámite e informes de subsanaciones",
     ],
   },
 ];
@@ -148,8 +132,8 @@ export default function ConsultoriaProyectosConstructivos() {
         </div>
       </motion.div>
 
-       {/* Icon Showcase Section */}
-       <IconShowcase />
+      {/* Icon Showcase Section */}
+      <IconShowcase />
 
       {/* Services Section */}
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">

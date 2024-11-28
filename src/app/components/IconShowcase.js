@@ -2,81 +2,76 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Cog, ClipboardCheck, MapPin, HardHat, Building2, Layers, Shield, Home, FileText, Zap } from 'lucide-react'
+import {
+  Building,
+  Briefcase,
+  FileCheck,
+  Ruler,
+  Hammer,
+  HardHat,
+  Home,
+  Layers,
+} from 'lucide-react'
 
 const Icons = {
-  Cog,
-  ClipboardCheck,
-  MapPin,
+  Building,
+  Briefcase,
+  FileCheck,
+  Ruler,
+  Hammer,
   HardHat,
-  Building2,
-  Layers,
-  Shield,
   Home,
-  FileText,
-  Zap,
+  Layers,
 }
 
 const services = [
   {
-    icon: 'Cog',
-    title: "Asesoramiento Técnico",
-    content:
-      "Nuestro Estudio cuenta con profesionales especializados en la puesta en código de los proyectos y/o finales de obra e instalaciones...",
-  },
-  {
-    icon: 'ClipboardCheck',
+    icon: 'Building',
     title: "Análisis de Factibilidad del Proyecto Constructivo",
     content:
-      "Análisis integral de aspectos morfológicos e interiorismo, evaluación de usos requeridos...",
+      "Análisis integral de aspectos morfológicos e interiorismo del anteproyecto, evaluación de usos requeridos, verificación de disposiciones del Código Urbanístico y de Edificación, informe de factibilidad de proyecto constructivo.",
   },
   {
-    icon: 'MapPin',
+    icon: 'Briefcase',
+    title: "Plano de Etapa de Proyecto y Permiso de Obra Civil",
+    content:
+      "Adecuación de planos de arquitectura al formato municipal, tramitación de informes de dominio y certificados de aptitud ambiental, modificaciones de proyectos, seguimiento continuo del trámite con informes semanales.",
+  },
+  {
+    icon: 'FileCheck',
+    title: "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, etc.)",
+    content:
+      "Adecuación de los planos de instalaciones al formato municipal, tramitación de informes de dominio y Certificados de Aptitud Ambiental, seguimiento continuo del trámite e informes de subsanaciones, conforme de obra de instalaciones.",
+  },
+  {
+    icon: 'Ruler',
     title: "Plano de Mensura y Unificación",
     content:
-      "Adecuación del plano a formato municipal, tramitación de informes de dominio y seguimiento del trámite...",
+      "Adecuación del plano a formato municipal, tramitación de informes de dominio, informe de subsanaciones y adecuaciones correspondientes, seguimiento continuo del trámite con informes de situación semanal.",
+  },
+  {
+    icon: 'Hammer',
+    title: "Plano de Demolición",
+    content:
+      "Elaboración del plano de demolición con antecedentes de cada parcela, mediciones correspondientes, adecuación del plano a formato municipal, seguimiento del trámite e informes de subsanaciones.",
   },
   {
     icon: 'HardHat',
-    title: "Plano de Demolición",
+    title: "Portal Director de Obra",
     content:
-      "Elaboración del plano de demolición con antecedentes de cada parcela...",
-  },
-  {
-    icon: 'Building2',
-    title: "Plano de Etapa de Proyecto y Permiso de Obra Civil",
-    content:
-      "Adecuación de planos de instalaciones al formato municipal, tramitación de informes de dominio...",
-  },
-  {
-    icon: 'Layers',
-    title: "Pedidos de Excavaciones y AVO",
-    content:
-      "Gestión de la totalidad de los trámites de excavaciones, solicitud de AVO (Alta de Obra y Ejecución en TAD)...",
-  },
-  {
-    icon: 'Shield',
-    title: "Conforme a Obra (AVO 4)",
-    content:
-      "Regularización de obra en contravención o ajuste de obra, adecuación de planos de arquitectura...",
+      "Gestión de trámites de excavaciones, gestión de trámites de demoliciones, solicitud de alta de obra, cartel de obra, AVO 1, 2 y 3, seguimiento continuo del trámite con informes semanales.",
   },
   {
     icon: 'Home',
-    title: "Inicio y Final de Demolición",
+    title: "Conforme a Obra (AVO 4)",
     content:
-      "Adecuación del plano de arquitectura a formato municipal, modificaciones de proyecto...",
+      "Adecuación de planos de arquitectura de obra ejecutada a formato municipal, tramitación de informes de dominio y certificados de aptitud ambiental, regularización de Obra en Contravención y Ajuste de Obra, seguimiento continuo del trámite con reportes semanales.",
   },
   {
-    icon: 'FileText',
+    icon: 'Layers',
     title: "División en Propiedad Horizontal (MH)",
     content:
-      "Adecuación del plano a formato municipal, tramitación de informes de dominio...",
-  },
-  {
-    icon: 'Zap',
-    title: "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, etc.)",
-    content:
-      "Adecuación de los planos de instalaciones al formato municipal, tramitación de informes...",
+      "Adecuación del plano a formato municipal, tramitación de informes de dominio, tramitación ante registro de la propiedad inmueble, seguimiento del trámite e informes de subsanaciones.",
   },
 ]
 
@@ -146,7 +141,7 @@ export default function CircularServiceShowcase() {
                 transform: `translate(${x}px, ${y}px)`,
                 width: isMobile ? '42px' : '64px',
                 height: isMobile ? '42px' : '64px',
-                border: isMobile ? '2px solid #E5E7EB' : 'none', // Borde en mobile
+                border: isMobile ? '2px solid #E5E7EB' : 'none',
               }}
             >
               {Icon && (
