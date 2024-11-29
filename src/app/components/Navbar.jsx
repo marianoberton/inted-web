@@ -75,7 +75,8 @@ export default function Navbar() {
           isMobile ? "py-1" : "py-2"
         } flex items-center justify-between`}
       >
-        <div className={`${isMobile ? "w-24" : "w-28 md:w-44"}`}>
+        {/* Logo */}
+        <div className="max-h-16">
           <Link href="/">
             <Image
               src={
@@ -88,11 +89,13 @@ export default function Navbar() {
                   : "/images/blanco2.png"
               }
               alt="Logo"
-              width={isMobile ? 80 : 200}
-              height={isMobile ? 40 : 100}
+              width={isMobile ? 80 : 160}
+              height={isMobile ? 40 : 60} // Reduce el alto
             />
           </Link>
         </div>
+
+        {/* Navegación */}
         <nav className="hidden md:block flex-grow">
           <ul className="flex justify-center items-center space-x-6 relative">
             {navItems.map((item, index) => (
@@ -147,44 +150,48 @@ export default function Navbar() {
             ))}
           </ul>
         </nav>
+
+        {/* Language Switcher y Menú */}
         <div className="hidden md:flex items-center space-x-4">
-        {/* Language Switcher */}
-        <div className="flex items-center space-x-2">
-          <button
-            className={`text-sm font-medium ${
-              scrolled
-                ? language === "es"
-                  ? "font-bold underline text-[#1b293f]" // Estilo seleccionado en color sólido
-                  : "text-[#1b293f] hover:opacity-70"
-                : language === "es"
-                ? "font-bold underline text-white" // Estilo seleccionado en fondo transparente
-                : "text-white hover:opacity-70"
-            }`}
-            onClick={() => setLanguage("es")}
-          >
-            ES
-          </button>
-          <span
-            className={`w-px h-4 ${
-              scrolled ? "bg-gray-400" : "bg-white" // Cambia el separador según el scroll
-            }`}
-          ></span>
-          <button
-            className={`text-sm font-medium ${
-              scrolled
-                ? language === "en"
-                  ? "font-bold underline text-[#1b293f]" // Estilo seleccionado en color sólido
-                  : "text-[#1b293f] hover:opacity-70"
-                : language === "en"
-                ? "font-bold underline text-white" // Estilo seleccionado en fondo transparente
-                : "text-white hover:opacity-70"
-            }`}
-            onClick={() => setLanguage("en")}
-          >
-            EN
-          </button>
+          {/* Language Switcher */}
+          <div className="flex items-center space-x-2">
+            <button
+              className={`text-sm font-medium ${
+                scrolled
+                  ? language === "es"
+                    ? "font-bold underline text-[#1b293f]"
+                    : "text-[#1b293f] hover:opacity-70"
+                  : language === "es"
+                  ? "font-bold underline text-white"
+                  : "text-white hover:opacity-70"
+              }`}
+              onClick={() => setLanguage("es")}
+            >
+              ES
+            </button>
+            <span
+              className={`w-px h-4 ${
+                scrolled ? "bg-gray-400" : "bg-white"
+              }`}
+            ></span>
+            <button
+              className={`text-sm font-medium ${
+                scrolled
+                  ? language === "en"
+                    ? "font-bold underline text-[#1b293f]"
+                    : "text-[#1b293f] hover:opacity-70"
+                  : language === "en"
+                  ? "font-bold underline text-white"
+                  : "text-white hover:opacity-70"
+              }`}
+              onClick={() => setLanguage("en")}
+            >
+              EN
+            </button>
+          </div>
         </div>
-      </div>
+
+        {/* Botón de menú móvil */}
         <button
           className={`md:hidden ${scrolled ? "text-[#1b293f]" : "text-white"}`}
           onClick={() => setMenuOpen(!menuOpen)}
@@ -192,6 +199,8 @@ export default function Navbar() {
           <Menu size={24} />
         </button>
       </div>
+
+      {/* Menú móvil */}
       {menuOpen && (
         <div className="md:hidden bg-white p-4">
           <ul className="space-y-2">
@@ -225,31 +234,6 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          {/* Language Switcher in Mobile */}
-          <div className="flex justify-center items-center space-x-4 mt-4">
-            <button
-              className={`text-sm font-medium ${
-                language === "es" 
-                  ? "font-bold underline text-[#1b293f]" 
-                  : "text-[#1b293f] hover:opacity-70"
-              }`}
-              onClick={() => setLanguage("es")}
-            >
-              ES
-            </button>
-            <span className="w-px h-4 bg-gray-400"></span>
-            <button
-              className={`text-sm font-medium ${
-                language === "en" 
-                  ? "font-bold underline text-[#1b293f]" 
-                  : "text-[#1b293f] hover:opacity-70"
-              }`}
-              onClick={() => setLanguage("en")}
-            >
-              EN
-            </button>
-          </div>
-
         </div>
       )}
     </header>

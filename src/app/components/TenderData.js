@@ -123,7 +123,8 @@ export default function TenderPreview() {
   return (
     <div id="tender-preview" className="bg-white py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-[#1b293f] mb-8 text-center">Licitaciones Activas por Categoría</h2>
+      <h2 className="text-4xl md:text-5xl font-bold text-[#1b293f] mb-8 text-center">  Licitaciones Activas por Categoría</h2>
+
         <div className="relative">
           <AnimatePresence mode="wait">
             {tenderData.length > 0 && (

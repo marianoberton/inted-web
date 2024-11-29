@@ -34,7 +34,7 @@ export default function CompanyOverview() {
       >
         <div className="max-w-3xl mx-auto text-center">
           <motion.h2
-            className="text-4xl font-bold text-[#1b293f] mb-6"
+            className="text-4xl md:text-5xl font-bold text-[#1b293f] mb-6"
             variants={textVariants}
           >
             Innovación y Calidad en Consultoría

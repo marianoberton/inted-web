@@ -84,7 +84,7 @@ export default function SobreNosotros() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-24 text-center"
         >
-          <h2 className="text-3xl font-bold text-[#1b293f] mb-6">Nuestra Misión</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">Nuestra Misión</h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Acompañar a nuestros clientes a lo largo de las diversas instancias de su proyecto, desde la planificación hasta la ejecución, ofreciendo soluciones que se adapten a sus necesidades.
           </p>
@@ -97,7 +97,7 @@ export default function SobreNosotros() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mb-24"
         >
-          <h2 className="text-3xl font-bold text-center text-[#1b293f] mb-12">Nuestras Fortalezas</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">Nuestras Fortalezas</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {companyFeatures.map((feature, index) => (
               <motion.div
@@ -126,7 +126,7 @@ export default function SobreNosotros() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mb-24"
         >
-          <h2 className="text-3xl font-bold text-center text-[#1b293f] mb-12">Proyectos Destacados</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">Proyectos Destacados</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projectImages.map((project, index) => (
               <motion.div

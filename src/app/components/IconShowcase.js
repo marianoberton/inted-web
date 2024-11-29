@@ -110,7 +110,7 @@ export default function CircularServiceShowcase() {
 
   return (
     <div className="relative container mx-auto py-16 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white px-4">
-      <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Nuestros Servicios</h2>
+      <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">Nuestros Servicios</h2>
       
       <div
         className={`relative flex items-center justify-center ${

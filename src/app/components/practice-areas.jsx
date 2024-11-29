@@ -99,13 +99,14 @@ export default function PracticeAreas() {
     <section className="py-24 bg-gradient-to-b from-gray-100 to-white">
       <div className="container mx-auto px-4">
         <motion.h2 
-          className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          Áreas de Práctica
-        </motion.h2>
+        className="text-4xl md:text-5xl font-bold text-center text-[#1b293f] mb-16"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        Áreas de Práctica
+      </motion.h2>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {practiceAreas.map((area, index) => (
             <PracticeArea key={index} {...area} />
