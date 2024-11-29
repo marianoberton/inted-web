@@ -53,7 +53,7 @@ export default function Footer() {
               alt="Logo Inted"
               width={150}
               height={80}
-              className="w-auto h-auto"
+              className="w-30 md:w-36 lg:w-44 h-auto"
             />
           </div>
 
