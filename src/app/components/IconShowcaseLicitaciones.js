@@ -2,41 +2,42 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileText, ClipboardCheck, Edit, Gavel, TrendingUp } from 'lucide-react'
+import { FileText, PenTool, FileCheck, HardHat, FileEdit, Briefcase, ClipboardList } from 'lucide-react'
 
 const Icons = {
   FileText,
-  ClipboardCheck,
-  Edit,
-  Gavel,
-  TrendingUp,
+  PenTool,
+  FileCheck,
+  HardHat,
+  FileEdit,
+  Briefcase,
+  ClipboardList,
 }
 
-const licitacionesServices = [
+const licitacionesServices = [  
+  {
+    icon: 'FileEdit',
+    title: "Elaboración de Ofertas e Impugnaciones",
+    content:
+      "Análisis de pliegos de bases y condiciones licitatorios, inscripción ante Registros de Proveedores, confección de documentación administrativa, técnica y oferta económica, confección de anteproyectos de obra y memorias descriptivas, análisis de ofertas de competidores y formulación de observaciones, elaboración de impugnaciones a dictámenes de evaluación de ofertas.",
+  },
+  {
+    icon: 'Briefcase',
+    title: "Ejecución del Proyecto Licitado",
+    content:
+      "Confección de cuadros de seguimiento de evolución de índices, presentación de solicitudes de adecuaciones de precios, presentación de documentación requerida por pliegos, solicitudes de reconocimiento de mayores costos por inversiones adicionales, representación técnica y administrativa ante los organismos correspondientes.",
+  },
   {
     icon: 'FileText',
     title: "Confección de Documentación Licitatoria",
-    content: "Elaboración de pliegos de bases y condiciones generales y particulares, especificaciones técnicas, circulares aclaratorias y/o modificatorias, dictámenes de evaluación de ofertas, contratos administrativos y/o comerciales, actas de recepción y certificados de liquidación final.",
+    content:
+      "Pliegos de bases y condiciones generales y particulares, especificaciones técnicas, circulares aclaratorias y/o modificatorias, dictámenes de evaluación de ofertas, contratos administrativos y/o comerciales, actas de recepción y certificados de liquidación final.",
   },
   {
-    icon: 'ClipboardCheck',
+    icon: 'ClipboardList',
     title: "Gestión de Procedimientos Licitatorios",
-    content: "Gestión de invitaciones a potenciales oferentes, análisis de consultas y elaboración de respuestas, gestión del acto de apertura de ofertas, evaluación de ofertas y solicitud de aclaraciones, asesoramiento durante la ejecución contractual.",
-  },
-  {
-    icon: 'Edit',
-    title: "Elaboración de Ofertas",
-    content: "Análisis de pliegos de bases y condiciones licitatorios, inscripción ante registros de proveedores, confección de documentación administrativa, técnica y oferta económica, confección de anteproyectos de obra y memorias descriptivas, análisis de ofertas de competidores y formulación de observaciones.",
-  },
-  {
-    icon: 'Gavel',
-    title: "Elaboración de Impugnaciones",
-    content: "Asesoría para la elaboración de impugnaciones fundamentadas, evaluación de dictámenes y formulación de objeciones basadas en el análisis detallado de las ofertas.",
-  },
-  {
-    icon: 'TrendingUp',
-    title: "Ejecución del Proyecto Licitado",
-    content: "Confección de cuadros de seguimiento de evolución de índices, presentación de solicitudes de adecuaciones de precios, presentación de documentación requerida por pliegos, y solicitudes de reconocimiento de mayores costos por inversiones adicionales.",
+    content:
+      "Gestión de invitaciones a potenciales oferentes, análisis de consultas y elaboración de respuestas, gestión del acto de apertura de ofertas, evaluación de ofertas y solicitud de aclaraciones, asesoramiento durante la ejecución contractual.",
   },
 ]
 
@@ -75,7 +76,7 @@ export default function LicitacionesServiceShowcase() {
 
   return (
     <div className="relative container mx-auto py-16 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white px-4">
-      <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Área de Licitaciones</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Nuestros Servicios</h2>
       
       <div
         className={`relative flex items-center justify-center ${
@@ -106,7 +107,7 @@ export default function LicitacionesServiceShowcase() {
                 transform: `translate(${x}px, ${y}px)`,
                 width: isMobile ? '42px' : '64px',
                 height: isMobile ? '42px' : '64px',
-                border: isMobile ? '2px solid #E5E7EB' : 'none', // Borde en mobile
+                border: isMobile ? '2px solid #E5E7EB' : 'none',
               }}
             >
               {Icon && (

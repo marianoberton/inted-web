@@ -4,7 +4,7 @@ import React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { FileText, PenTool, FileCheck, Building, Ruler, Clipboard, ArrowRight } from 'lucide-react'
+import { Briefcase, PenLine, HardHat, ArrowRight, FileEdit, ClipboardList } from 'lucide-react'
 import { Button } from "./ui/button"
 
 const PracticeArea = ({ title, image, link, services }) => (
@@ -26,20 +26,22 @@ const PracticeArea = ({ title, image, link, services }) => (
     </div>
     <div className="absolute inset-0 flex flex-col items-center justify-center p-6 transition-all duration-300 group-hover:justify-end">
       <h3 className="text-3xl font-bold text-white mb-4 text-center transition-all duration-300 group-hover:mb-8">{title}</h3>
-      <AnimatePresence>
-        {services.map((service, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="hidden group-hover:block"
-          >
-            <ServiceIcon {...service} />
-          </motion.div>
-        ))}
-      </AnimatePresence>
+      <div className="hidden group-hover:flex flex-col items-center space-y-4 w-full max-w-md mx-auto">
+        <AnimatePresence>
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              className="w-full"
+            >
+              <ServiceIcon {...service} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -59,11 +61,13 @@ const PracticeArea = ({ title, image, link, services }) => (
 )
 
 const ServiceIcon = ({ icon: Icon, title }) => (
-  <div className="flex items-center text-white mb-3">
-    <div className="bg-white/20 p-2 rounded-full mr-3">
+  <div className="flex items-center text-white">
+    {/* Contenedor del icono */}
+    <div className="bg-white/20 p-2 rounded-full flex items-center justify-center w-10 h-10 flex-shrink-0">
       {Icon && <Icon className="w-5 h-5" />}
     </div>
-    <span className="text-sm">{title}</span>
+    {/* Contenedor del texto */}
+    <span className="text-sm ml-4">{title}</span>
   </div>
 )
 
@@ -74,9 +78,9 @@ export default function PracticeAreas() {
       image: "/images/1678385453066.jpg",
       link: "/consultoria-licitaciones",
       services: [
-        { icon: FileText, title: "Confección de Documentación Licitatoria" },
-        { icon: PenTool, title: "Gestión de Procedimientos Licitatorios" },
-        { icon: FileCheck, title: "Elaboración de Ofertas" }
+        { icon: FileEdit, title: "Elaboración de Ofertas e Impugnaciones" },
+        { icon: Briefcase, title: "Ejecución del Proyecto Licitado" },
+        { icon: ClipboardList, title: "Gestión de Procedimientos Licitatorios" },
       ]
     },
     {
@@ -84,9 +88,9 @@ export default function PracticeAreas() {
       image: "/images/pexels-photo-3525541.jpeg",
       link: "/proyectos-constructivos",
       services: [
-        { icon: Building, title: "Análisis de Factibilidad del Proyecto Constructivo" },
-        { icon: Ruler, title: "Plano de Mensura y Unificación" },
-        { icon: Clipboard, title: "Plano de Demolición" }
+        { icon: Briefcase, title: "Análisis de Factibilidad del Proyecto Constructivo" },
+        { icon: PenLine, title: "Plano de Etapa de Proyecto y Permiso de Obra Civil" },
+        { icon: HardHat, title: "Portal Director de Obra" }
       ]
     }
   ]

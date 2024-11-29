@@ -12,12 +12,13 @@ import {
   Hammer,
   Layers,
   ArrowRight,
+  PenLine,
 } from "lucide-react";
 import IconShowcase from '../components/IconShowcase';
 
 const servicios = [
   {
-    icon: Building,
+    icon: Briefcase,
     title: "Análisis de Factibilidad del Proyecto Constructivo",
     details: [
       "Análisis integral de aspectos morfológicos e interiorismo del anteproyecto",
@@ -27,28 +28,28 @@ const servicios = [
     ],
   },
   {
-    icon: Briefcase,
+    icon: PenLine,
     title: "Plano de Etapa de Proyecto y Permiso de Obra Civil",
     details: [
       "Adecuación de planos de arquitectura al formato municipal",
       "Tramitación de informes de dominio y certificados de aptitud ambiental",
-      "Modificaciones de Proyectos",
+      "Modificaciones de proyectos",
       "Seguimiento continuo del trámite con informes semanales",
     ],
   },
   {
-    icon: FileCheck,
-    title: "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, etc.)",
+    icon: Building,
+    title: "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, Ventilación, Mecánica/Electromecánica)",
     details: [
       "Adecuación de los planos de instalaciones al formato municipal",
-      "Tramitación de informes de dominio y Certificados de Aptitud Ambiental",
+      "Tramitación de informes de dominio y certificados de aptitud ambiental",
       "Seguimiento continuo del trámite e informes de subsanaciones",
       "Conforme de obra de instalaciones. Incendio de obras instalaciones etc.",
     ],
   },
   {
     icon: Ruler,
-    title: "Plano de Mensura y Unificación",
+    title: "Plano de Mensura y Unificación Parcelaria",
     details: [
       "Adecuación del plano a formato municipal",
       "Tramitación de informes de dominio",      
@@ -70,7 +71,7 @@ const servicios = [
     icon: HardHat,
     title: "Portal Director de Obra",
     details: [
-      "Gestión de trámites de excavaciones",
+      "Gestión de trámites de solicitud de excavaciones",
       "Gestión de trámites de demoliciones",
       "Solicitud de alta de obra, cartel de obra, (AVO 1, 2 y 3)",
       "Seguimiento continuo del trámite con informes semanales",
@@ -118,10 +119,10 @@ export default function ConsultoriaProyectosConstructivos() {
         className="flex flex-col md:flex-row items-center bg-[#1b293f] text-white py-40 px-8 sm:px-12 lg:px-16 relative"
       >
         <div className="flex-1 max-w-md z-10 md:mr-8">
-          <h1 className="text-5xl font-bold mb-6">Consultoría en Desarrollo de Proyectos Constructivos</h1>
+          <h1 className="text-5xl font-bold mb-6">Consultoría en Desarrollo de Proyectos Constructivos.</h1>
           <p className="text-lg mb-6">
-            Asesoramiento integral en la gestoría de trámites requeridos para la realización de proyectos constructivos,
-            incluyendo planos de mensura, demolición, permisos de obra civil, entre otros.
+            Nuestro asesoramiento integral en la gestoría de trámites requeridos para la realización de proyectos constructivos.
+            
           </p>
         </div>
         <div className="flex-1 w-full h-full md:h-auto">
@@ -138,7 +139,9 @@ export default function ConsultoriaProyectosConstructivos() {
       {/* Services Section */}
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">Nuestros Servicios</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-content-center"
+        >
           {servicios.map((item, index) => {
             const IconComponent = item.icon;
 
@@ -172,6 +175,7 @@ export default function ConsultoriaProyectosConstructivos() {
           })}
         </div>
       </div>
+
     </div>
   );
 }

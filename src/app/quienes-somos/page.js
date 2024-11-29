@@ -66,7 +66,7 @@ export default function SobreNosotros() {
                   Inted
                 </h1>
                 <p className="text-lg sm:text-xl text-gray-200">
-                  Inted es una consultora innovadora que brinda un asesoramiento
+                  Somos una consultora innovadora que brinda un asesoramiento
                   integral en el ámbito de proyectos constructivos y licitaciones
                   públicas y/o privadas, garantizando el cumplimiento normativo en cada
                   etapa del proceso.

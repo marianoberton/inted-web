@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Building,
   Briefcase,
-  FileCheck,
+  PenLine,
   Ruler,
   Hammer,
   HardHat,
@@ -16,7 +16,7 @@ import {
 const Icons = {
   Building,
   Briefcase,
-  FileCheck,
+  PenLine,
   Ruler,
   Hammer,
   HardHat,
@@ -26,26 +26,26 @@ const Icons = {
 
 const services = [
   {
-    icon: 'Building',
+    icon: 'Briefcase',
     title: "Análisis de Factibilidad del Proyecto Constructivo",
     content:
       "Análisis integral de aspectos morfológicos e interiorismo del anteproyecto, evaluación de usos requeridos, verificación de disposiciones del Código Urbanístico y de Edificación, informe de factibilidad de proyecto constructivo.",
   },
   {
-    icon: 'Briefcase',
+    icon: 'PenLine',
     title: "Plano de Etapa de Proyecto y Permiso de Obra Civil",
     content:
       "Adecuación de planos de arquitectura al formato municipal, tramitación de informes de dominio y certificados de aptitud ambiental, modificaciones de proyectos, seguimiento continuo del trámite con informes semanales.",
   },
   {
-    icon: 'FileCheck',
-    title: "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, etc.)",
+    icon: 'Building',
+    title: "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, Ventilación, Mecánica/Electromecánica)",
     content:
-      "Adecuación de los planos de instalaciones al formato municipal, tramitación de informes de dominio y Certificados de Aptitud Ambiental, seguimiento continuo del trámite e informes de subsanaciones, conforme de obra de instalaciones.",
+      "Adecuación de los planos de instalaciones al formato municipal, tramitación de informes de dominio y certificados de aptitud ambiental, seguimiento continuo del trámite e informes de subsanaciones, conforme de obra de instalaciones.",
   },
   {
     icon: 'Ruler',
-    title: "Plano de Mensura y Unificación",
+    title: "Plano de Mensura y Unificación Parcelaria",
     content:
       "Adecuación del plano a formato municipal, tramitación de informes de dominio, informe de subsanaciones y adecuaciones correspondientes, seguimiento continuo del trámite con informes de situación semanal.",
   },
@@ -59,13 +59,13 @@ const services = [
     icon: 'HardHat',
     title: "Portal Director de Obra",
     content:
-      "Gestión de trámites de excavaciones, gestión de trámites de demoliciones, solicitud de alta de obra, cartel de obra, AVO 1, 2 y 3, seguimiento continuo del trámite con informes semanales.",
+      "Gestión de trámites de solicitud de excavaciones, demoliciones, alta de obra, cartel de obra, AVO 1, 2 y 3, seguimiento continuo del trámite con informes semanales",
   },
   {
     icon: 'Home',
     title: "Conforme a Obra (AVO 4)",
     content:
-      "Adecuación de planos de arquitectura de obra ejecutada a formato municipal, tramitación de informes de dominio y certificados de aptitud ambiental, regularización de Obra en Contravención y Ajuste de Obra, seguimiento continuo del trámite con reportes semanales.",
+      "Adecuación de planos de arquitectura de obra ejecutada a formato municipal, tramitación de informes de dominio y certificados de aptitud ambiental, regularización de obra en contravención y ajuste de obra, seguimiento continuo del trámite con reportes semanales.",
   },
   {
     icon: 'Layers',

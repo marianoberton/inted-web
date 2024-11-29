@@ -75,7 +75,7 @@ export default function Navbar() {
           isMobile ? "py-1" : "py-2"
         } flex items-center justify-between`}
       >
-        <div className={`${isMobile ? "w-24" : "w-28 md:w-36"}`}>
+        <div className={`${isMobile ? "w-24" : "w-28 md:w-44"}`}>
           <Link href="/">
             <Image
               src={
@@ -88,8 +88,8 @@ export default function Navbar() {
                   : "/images/blanco2.png"
               }
               alt="Logo"
-              width={isMobile ? 80 : 180}
-              height={isMobile ? 40 : 90}
+              width={isMobile ? 80 : 200}
+              height={isMobile ? 40 : 100}
             />
           </Link>
         </div>

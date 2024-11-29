@@ -44,7 +44,7 @@ export default function Contacto() {
         transition={{ duration: 0.5 }}
         className="max-w-7xl mx-auto"
       >
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-[#1b293f] mb-16">Contáctenos</h1>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-[#1b293f] mb-16">Contacto</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Contact Form */}
@@ -54,7 +54,7 @@ export default function Contacto() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="bg-white rounded-lg shadow-xl p-8"
           >
-            <h2 className="text-2xl font-semibold text-[#1b293f] mb-6">Envíenos un mensaje</h2>
+            <h2 className="text-2xl font-semibold text-[#1b293f] mb-6">Envíanos un mensaje</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <Input
                 type="text"

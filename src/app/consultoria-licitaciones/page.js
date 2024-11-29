@@ -2,56 +2,58 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { FileText, PenTool, FileCheck, HardHat, ArrowRight } from "lucide-react";
+import { FileText, FileEdit, Briefcase, ClipboardList, ArrowRight } from "lucide-react";
 import IconShowcaseLicitaciones from "../components/IconShowcaseLicitaciones"; // Asegúrate de que el archivo exista y esté correctamente nombrado
 
 const servicios = [
   {
-    icon: FileText,
-    title: "Confección de Documentación Licitatoria",
+    icon: FileEdit,
+    title: "Elaboración de Ofertas e Impugnaciones",
     details: [
-      "Pliegos de Bases y Condiciones Generales y Particulares",
-      "Especificaciones Técnicas",
-      "Circulares aclaratorias y/o modificatorias",
-      "Dictámenes de Evaluación de Ofertas",
-      "Contratos Administrativos y/o Comerciales",
-      "Actas de Recepción y Certificados de Liquidación Final",
+      "Análisis de pliegos de bases y condiciones licitatorios",
+      "Inscripción ante Registros de Proveedores",
+      "Confección de documentación administrativa, técnica y oferta económica",
+      "Confección de anteproyectos de obra y memorias descriptivas",
+      "Análisis de ofertas de competidores y formulación de observaciones",
+      "Elaboración de impugnaciones a dictámenes de evaluación de ofertas",
     ],
   },
   {
-    icon: PenTool,
+    icon: Briefcase,
+    title: "Ejecución del Proyecto Licitado",
+    details: [
+      "Confección de cuadros de seguimiento de evolución de índices",
+      "Presentación de solicitudes de adecuaciones de precios",
+      "Presentación de documentación requerida por pliegos",
+      "Solicitudes de reconocimiento de mayores costos por inversiones adicionales",
+      "Representación técnica y administrativa ante los organismos correspondientes",
+    ],
+  },
+  {
+    icon: FileText,
+    title: "Confección de Documentación Licitatoria",
+    details: [
+      "Pliegos de bases y condiciones generales y particulares",
+      "Especificaciones técnicas",
+      "Circulares aclaratorias y/o modificatorias",
+      "Dictámenes de evaluación de ofertas",
+      "Contratos administrativos y/o comerciales",
+      "Actas de recepción y certificados de liquidación final",
+    ],
+  },
+  {
+    icon: ClipboardList,
     title: "Gestión de Procedimientos Licitatorios",
     details: [
       "Gestión de invitaciones a potenciales oferentes",
       "Análisis de consultas y elaboración de respuestas",
-      "Gestión del Acto de Apertura de Ofertas",
-      "Evaluación de Ofertas y solicitud de aclaraciones",
+      "Gestión del acto de apertura de ofertas",
+      "Evaluación de ofertas y solicitud de aclaraciones",
       "Asesoramiento durante la ejecución contractual",
     ],
   },
-  {
-    icon: FileCheck,
-    title: "Elaboración de Ofertas",
-    details: [
-      "Análisis de Pliegos de Bases y Condiciones Licitatorios",
-      "Inscripción ante Registros de Proveedores",
-      "Confección de documentación administrativa, técnica y oferta económica",
-      "Confección de Anteproyectos de Obra y Memorias descriptivas",
-      "Análisis de ofertas de competidores y formulación de observaciones",
-      "Elaboración de Impugnaciones a Dictámenes de Evaluación de Ofertas",
-    ],
-  },
-  {
-    icon: HardHat,
-    title: "Ejecución del Proyecto Licitado",
-    details: [
-      "Confección de cuadros de seguimiento de evolución de índices",
-      "Presentación de solicitudes de Adecuaciones de Precios",
-      "Presentación de documentación requerida por Pliegos",
-      "Solicitudes de reconocimiento de mayores costos por inversiones adicionales",
-    ],
-  },
 ];
+
 
 export default function ConsultoriaLicitaciones() {
   return (

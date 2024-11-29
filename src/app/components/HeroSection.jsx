@@ -48,7 +48,7 @@ export default function HeroSection() {
           Gestión de proyectos públicos y/o privados
         </h1>
         <p className="text-lg md:text-xl text-white mb-8 max-w-xl">
-          Brindamos asesoramiento integral en gestión de proyectos constructivos y ejecución de contrataciones públicas y/o privadas
+          Brindamos asesoramiento integral en gestión de proyectos constructivos y ejecución de contrataciones públicas y/o privadas.
         </p>
       </div>
     </div>
