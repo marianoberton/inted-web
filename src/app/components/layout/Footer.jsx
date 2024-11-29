@@ -1,14 +1,25 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Linkedin, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, MapPin } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="bg-[#1b293f] text-[#f4f3f1] py-12">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start mb-8">
+          {/* Logo */}
+          <div className="flex justify-center order-2 md:order-2">
+            <Image
+              src="/images/blanco1.png"
+              alt="Logo Inted"
+              width={150}
+              height={80}
+              className="w-30 md:w-36 lg:w-44 h-auto"
+            />
+          </div>
+
           {/* Enlaces rápidos */}
-          <div className="text-center md:text-left">
+          <div className="text-center md:text-left order-1 md:order-1">
             <h4 className="font-bold text-lg mb-4">Enlaces Rápidos</h4>
             <ul className="space-y-2">
               <li>
@@ -46,20 +57,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Logo */}
-          <div className="flex justify-center">
-            <Image
-              src="/images/blanco1.png"
-              alt="Logo Inted"
-              width={150}
-              height={80}
-              className="w-30 md:w-36 lg:w-44 h-auto"
-            />
-          </div>
-
           {/* Ubicación */}
-          <div className="text-center md:text-right flex flex-col items-center md:items-end">
-            <div className="mb-6"> {/* Espaciado extra aquí */}
+          <div className="text-center md:text-right flex flex-col items-center md:items-end order-3">
+            <div className="mb-6">
               <h4 className="font-bold text-lg mb-2">Ubicación</h4>
               <div className="flex items-center">
                 <MapPin className="w-6 h-6 text-[#f4f3f1] mr-3" />
@@ -71,7 +71,7 @@ export default function Footer() {
             </div>
 
             {/* Redes sociales */}
-            <div className="flex justify-center md:justify-end space-x-6 mt-4"> {/* Separación adicional */}
+            <div className="flex justify-center md:justify-end space-x-6 mt-4">
               <a
                 href="https://www.facebook.com"
                 target="_blank"
