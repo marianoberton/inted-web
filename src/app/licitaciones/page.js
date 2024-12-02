@@ -98,15 +98,12 @@ export default function LicitacionesPage() {
       const nombreCoincide = filtroNombre
         ? licitacion.nombre.toLowerCase().includes(filtroNombre.toLowerCase())
         : true;
-      return (
-        licitacion.estado !== "En curso/Terminada" &&
-        new Date(licitacion.fechaApertura.split("/").reverse().join("-")) >= fechaReferencia &&
-        categoriaCoincide &&
-        tipoContratacionCoincide &&
-        nombreCoincide
-      );
+  
+      // Eliminar la validación de fechas
+      return categoriaCoincide && tipoContratacionCoincide && nombreCoincide;
     });
   };
+  
 
   const licitacionesFiltradas = filtrarLicitaciones();
 
