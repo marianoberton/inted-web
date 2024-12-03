@@ -11,6 +11,7 @@ import {
   HardHat,
   Home,
   Layers,
+  FileCheck,
 } from 'lucide-react'
 
 const Icons = {
@@ -22,11 +23,12 @@ const Icons = {
   HardHat,
   Home,
   Layers,
+  FileCheck,
 }
 
 const services = [
   {
-    icon: 'Briefcase',
+    icon: 'FileCheck',
     title: "Análisis de Factibilidad del Proyecto Constructivo",
     content:
       "Análisis integral de aspectos morfológicos e interiorismo del anteproyecto, evaluación de usos requeridos, verificación de disposiciones del Código Urbanístico y de Edificación, informe de factibilidad de proyecto constructivo.",

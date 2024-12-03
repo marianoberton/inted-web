@@ -18,7 +18,7 @@ import IconShowcase from '../components/IconShowcase';
 
 const servicios = [
   {
-    icon: Briefcase,
+    icon: FileCheck,
     title: "Análisis de Factibilidad del Proyecto Constructivo",
     details: [
       "Análisis integral de aspectos morfológicos e interiorismo del anteproyecto",

@@ -65,12 +65,10 @@ export default function SobreNosotros() {
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
                   Inted
                 </h1>
-                <p className="text-lg sm:text-xl text-gray-200">
-                  Somos una consultora innovadora que brinda un asesoramiento
-                  integral en el ámbito de proyectos constructivos y licitaciones
-                  públicas y/o privadas, garantizando el cumplimiento normativo en cada
-                  etapa del proceso.
+                <p className="text-lg sm:text-xl lg:text-2xl text-gray-200 max-w-3xl leading-tight">
+                  Somos una consultora innovadora que brinda un asesoramiento integral en el ámbito de proyectos constructivos y licitaciones públicas y/o privadas, garantizando el cumplimiento normativo en cada etapa del proceso.
                 </p>
+
               </div>
             </div>
           </div>

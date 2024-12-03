@@ -4,7 +4,7 @@ import React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Briefcase, PenLine, HardHat, ArrowRight, FileEdit, ClipboardList } from 'lucide-react'
+import { Briefcase, PenLine, HardHat, ArrowRight, FileEdit, ClipboardList, Building } from 'lucide-react'
 import { Button } from "./ui/button"
 
 const PracticeArea = ({ title, image, link, services }) => (
@@ -88,8 +88,8 @@ export default function PracticeAreas() {
       image: "/images/pexels-photo-3525541.jpeg",
       link: "/proyectos-constructivos",
       services: [
-        { icon: Briefcase, title: "Análisis de Factibilidad del Proyecto Constructivo" },
         { icon: PenLine, title: "Plano de Etapa de Proyecto y Permiso de Obra Civil" },
+        { icon: Building, title: "Planos de Instalaciones" },
         { icon: HardHat, title: "Portal Director de Obra" }
       ]
     }

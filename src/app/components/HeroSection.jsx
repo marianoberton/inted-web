@@ -47,9 +47,10 @@ export default function HeroSection() {
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 max-w-2xl">
           Gestión de proyectos públicos y/o privados
         </h1>
-        <p className="text-lg md:text-xl text-white mb-8 max-w-xl">
-          Brindamos asesoramiento integral en gestión de proyectos constructivos y ejecución de contrataciones públicas y/o privadas.
-        </p>
+        <p className="text-lg md:text-xl lg:text-2xl text-white mb-8 max-w-3xl lg:max-w-4xl leading-tight">
+        Brindamos asesoramiento integral en gestión de proyectos constructivos y ejecución de contrataciones públicas y/o privadas.
+      </p>
+
       </div>
     </div>
   );

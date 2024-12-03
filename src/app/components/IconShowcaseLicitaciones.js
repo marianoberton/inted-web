@@ -31,7 +31,7 @@ const licitacionesServices = [
     icon: 'FileText',
     title: "Confección de Documentación Licitatoria",
     content:
-      "Pliegos de bases y condiciones generales y particulares, especificaciones técnicas, circulares aclaratorias y/o modificatorias, dictámenes de evaluación de ofertas, contratos administrativos y/o comerciales, actas de recepción y certificados de liquidación final.",
+      "Pliegos de bases y condiciones generales, particulares y especificaciones técnicas, circulares aclaratorias y/o modificatorias, dictámenes de evaluación de ofertas, contratos administrativos y/o comerciales, actas de recepción y certificados de liquidación final.",
   },
   {
     icon: 'ClipboardList',

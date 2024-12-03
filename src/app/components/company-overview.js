@@ -37,7 +37,7 @@ export default function CompanyOverview() {
             className="text-4xl md:text-5xl font-bold text-[#1b293f] mb-6"
             variants={textVariants}
           >
-            Innovación y Calidad en Consultoría
+            Innovación y calidad en consultoría
           </motion.h2>
           <motion.p
             className="text-lg text-[#1b293f] mb-6 leading-relaxed"
@@ -50,7 +50,7 @@ export default function CompanyOverview() {
             variants={textVariants}
           >
             
-            Ofrecemos un amplio rango de servicios, que abarcan la gestoría de trámites constructivos, habilitaciones comerciales y confección de ofertas para licitaciones públicas y/o privadas. Contamos con un equipo multidisciplinario de profesionales que combina experiencia en el ámbito público/privado.          </motion.p>
+            Ofrecemos un amplio rango de servicios, que abarcan la gestoría de trámites constructivos y confección de ofertas para licitaciones públicas y/o privadas. Contamos con un equipo multidisciplinario de profesionales que combina experiencia en el ámbito público/privado.          </motion.p>
           <motion.div variants={textVariants}>
             <Button
               className="bg-[#1b293f] text-white hover:bg-[#bfbfbf] hover:text-[#1b293f]"
