@@ -4,6 +4,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Users, TrendingUp, ShieldCheck, Lightbulb } from 'lucide-react';
+import RecurringJobsCarousel from '../components/RecurringJobsCarousel';
+
 
 const companyFeatures = [
   {
@@ -117,37 +119,9 @@ export default function SobreNosotros() {
           </div>
         </motion.div>
 
-        {/* Project Showcase */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mb-24"
-        >
-          <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">Proyectos Destacados</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projectImages.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative w-full h-[300px] rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105"
-              >
-                <Image
-                  src={project.src}
-                  alt={project.caption}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-xl"
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#1b293f] to-transparent p-4">
-                  <p className="text-white text-lg font-semibold">{project.caption}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        <RecurringJobsCarousel />
+
+        
 
         {/* Commitment Statement */}
         <motion.div
