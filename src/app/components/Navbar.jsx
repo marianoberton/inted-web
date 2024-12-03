@@ -45,6 +45,10 @@ export default function Navbar() {
     }
   }, [isTransparentPage]);
 
+  const handleLinkClick = () => {
+    setMenuOpen(false);
+  };
+
   const navItems = [
     { name: "Quiénes Somos", path: "/quienes-somos" },
     {
@@ -136,7 +140,7 @@ export default function Navbar() {
                     </div>
                   </div>
                 ) : (
-                  <Link href={item.path}>
+                  <Link href={item.path} onClick={handleLinkClick}>
                     <span
                       className={`text-sm font-medium ${
                         scrolled ? "text-[#1b293f]" : "text-white"
@@ -215,7 +219,10 @@ export default function Navbar() {
                     <ul className="pl-4 space-y-1">
                       {item.dropdown.map((dropdownItem, idx) => (
                         <li key={idx}>
-                          <Link href={dropdownItem.path} passHref>
+                          <Link
+                            href={dropdownItem.path}
+                            onClick={handleLinkClick}
+                          >
                             <span className="text-sm text-[#1b293f] hover:text-[#bfbfbf] transition-colors duration-200 cursor-pointer">
                               {dropdownItem.name}
                             </span>
@@ -225,7 +232,7 @@ export default function Navbar() {
                     </ul>
                   </div>
                 ) : (
-                  <Link href={item.path}>
+                  <Link href={item.path} onClick={handleLinkClick}>
                     <span className="text-sm font-medium text-[#1b293f] hover:text-[#bfbfbf] transition-colors duration-200">
                       {item.name}
                     </span>
