@@ -1,15 +1,13 @@
-// src/app/layout.js
-import './globals.css'; // Importa los estilos globales de Tailwind
+import './globals.css';
 import { Open_Sans } from 'next/font/google';
-import Header from "./components/Navbar.jsx";
-import Footer from "./components/layout/Footer.jsx";
 import Navbar from './components/Navbar.jsx';
+import Footer from "./components/layout/Footer.jsx";
+import WhatsAppButton from './components/WhatsAppButton';
 
-// Configuración de Open Sans con el módulo incorporado
 const openSans = Open_Sans({
   subsets: ['latin'],
-  weight: ['400', '600', '700'], // Pesos necesarios
-  variable: '--font-open-sans', // Variable CSS para la tipografía
+  weight: ['400', '600', '700'],
+  variable: '--font-open-sans',
 });
 
 export default function Layout({ children }) {
@@ -29,7 +27,9 @@ export default function Layout({ children }) {
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <WhatsAppButton phoneNumber="1234567890" message="Hola, me gustaría obtener más información sobre Inted." />
       </body>
     </html>
   );
 }
+
