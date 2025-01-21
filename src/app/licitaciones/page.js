@@ -16,13 +16,21 @@ export default function LicitacionesPage() {
   const fechaReferencia = new Date("2024-11-01");
 
   const parseMonto = (montoStr) => {
-    if (!montoStr || typeof montoStr !== "string") return 0;
-    let montoClean = montoStr.replace(/[^\d.,-]/g, "").trim();
-    montoClean = montoClean.replace(/\./g, "");
-    montoClean = montoClean.replace(/,/g, ".");
-    const monto = parseFloat(montoClean);
-    return isNaN(monto) ? 0 : monto;
+    if (!montoStr || typeof montoStr !== "string") return "No disponible";
+  
+    try {
+      let montoClean = montoStr.replace(/[^0-9,.-]/g, "").trim();
+      montoClean = montoClean.replace(/\./g, "");
+      montoClean = montoClean.replace(/,/g, ".");
+      const monto = parseFloat(montoClean);
+      return isNaN(monto) ? "No disponible" : monto;
+    } catch (error) {
+      console.error("Error al procesar el monto:", error);
+      return "No disponible";
+    }
   };
+  
+  
 
   const parseFecha = (fechaStr) => {
     if (!fechaStr) return "Fecha no disponible";
@@ -44,14 +52,15 @@ export default function LicitacionesPage() {
       try {
         const querySnapshot = await getDocs(collection(db, "procesos-bac-dashboard"));
         const documents = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
+  
         const licitacionesData = documents
           .filter((doc) => doc.categoria_general && doc.categoria_general !== "Sin Clasificación")
           .map((doc) => {
             let nombreProceso = "Nombre no disponible";
             let monto = 0;
             let tipoContratacion = "Sin Tipo de Contratación";
-
+            let fechaApertura = "Fecha no disponible";
+  
             try {
               const informacionBasica = JSON.parse(doc.informacion_basica || "{}");
               nombreProceso = informacionBasica.nombre_proceso
@@ -61,16 +70,47 @@ export default function LicitacionesPage() {
             } catch (error) {
               console.error("Error al parsear informacion_basica:", error);
             }
-
+  
             try {
               const montoDuracion = JSON.parse(doc.monto_duracion || "{}");
+              console.log("Monto duracion original:", montoDuracion.monto);
+
               monto = parseMonto(montoDuracion.monto);
+              console.log("Monto procesado:", monto);
+
             } catch (error) {
               console.error("Error al parsear monto_duracion:", error);
             }
-
-            const fechaApertura = parseFecha(doc.cronograma ? JSON.parse(doc.cronograma).fecha_publicacion : "");
-
+  
+            try {
+              const cronograma = JSON.parse(doc.cronograma || "{}");
+              if (cronograma.fecha_acto_apertura) {
+                console.log("Fecha acto apertura original:", cronograma.fecha_acto_apertura);
+                // Dividir fecha y hora
+                const [datePart, timePart] = cronograma.fecha_acto_apertura.split(" ");
+                let [day, month, year] = datePart.split("/");
+            
+                // Normalizar a dos dígitos
+                day = day.padStart(2, "0");
+                month = month.padStart(2, "0");
+            
+                // Crear fecha en formato ISO
+                const formattedDate = `${year}-${month}-${day}T${timePart}`;
+                console.log("Fecha formateada:", formattedDate);
+            
+                const dateObj = new Date(formattedDate);
+                if (isNaN(dateObj.getTime())) {
+                  console.warn("Fecha no válida procesada:", formattedDate);
+                  fechaApertura = "Fecha no disponible";
+                } else {
+                  fechaApertura = dateObj;
+                }
+              }
+            } catch (error) {
+              console.error("Error al procesar cronograma:", error);
+            }
+            
+  
             return {
               id: doc.id,
               nombre: nombreProceso,
@@ -81,15 +121,39 @@ export default function LicitacionesPage() {
               estado: doc.estado || "Sin Estado",
             };
           });
+  
+        // Filtrar por fecha igual o posterior al día de hoy
+        const today = new Date();
+        const filteredLicitaciones = licitacionesData.filter((licitacion) => {
+          return licitacion.fechaApertura instanceof Date && licitacion.fechaApertura >= today;
+        });
 
-        setLicitaciones(licitacionesData);
+        // Ordenar por fecha (más reciente primero)
+        filteredLicitaciones.sort((a, b) => b.fechaApertura - a.fechaApertura);
+
+
+  
+        // Convertir fechas a formato legible después de ordenar
+        const formattedLicitaciones = filteredLicitaciones.map((licitacion) => ({
+          ...licitacion,
+          fechaApertura: licitacion.fechaApertura instanceof Date
+            ? licitacion.fechaApertura.toLocaleDateString("es-AR")
+            : licitacion.fechaApertura,
+        }));
+  
+        setLicitaciones(formattedLicitaciones);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+  
     fetchLicitaciones();
   }, []);
+  
+  
+  
+  
+  
 
   const filtrarLicitaciones = () => {
     return licitaciones.filter((licitacion) => {
@@ -124,7 +188,7 @@ export default function LicitacionesPage() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-xl text-center text-gray-600 mb-12"
         >
-          Datos actualizados al 1/11/2024
+          
         </motion.p>
 
         <motion.div 
@@ -212,15 +276,20 @@ export default function LicitacionesPage() {
                   </div>
                   <div className="p-6 bg-gray-50">
                     <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center text-gray-600">
-                        <Calendar size={16} className="mr-2" />
-                        <span className="text-sm">{licitacion.fechaApertura}</span>
-                      </div>
+                     <div className="flex items-center text-gray-600">
+                      <Calendar size={16} className="mr-2" />
+                      <span className="text-sm">Fecha de apertura: {licitacion.fechaApertura}</span>
+                    </div>
+
                       <div className="flex items-center text-gray-600">
                         <DollarSign size={16} className="mr-2" />
-                        {/* Eliminar el símbolo $ antes del monto */}
-                        <span className="text-sm font-semibold">{licitacion.monto.toLocaleString("es-AR")}</span>
+                        <span className="text-sm font-semibold">
+                          {licitacion.monto === "No disponible"
+                            ? "No disponible"
+                            : licitacion.monto.toLocaleString("es-AR")}
+                        </span>
                       </div>
+
                     </div>
                   </div>
 
