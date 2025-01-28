@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 export default function WhatsAppButton() {
-  const phoneNumber = '+5491132766709'; // Número de WhatsApp
+  const phoneNumber = '+5491171564033'; // Número de WhatsApp
   const message = 'Hola, me gustaría obtener más información.'; // Mensaje predeterminado
   const [isVisible, setIsVisible] = useState(false);
   const encodedMessage = encodeURIComponent(message);
