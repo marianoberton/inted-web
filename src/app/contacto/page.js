@@ -1,37 +1,58 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { MapPin, Send } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { MapPin, Send } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 
 export default function Contacto() {
   const [formData, setFormData] = useState({
-    nombre: '',
-    email: '',
-    telefono: '',
-    mensaje: '',
+    nombre: "",
+    email: "",
+    telefono: "",
+    mensaje: "",
   });
+
+  const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setFormData({
-      nombre: '',
-      email: '',
-      telefono: '',
-      mensaje: '',
-    });
+    setStatus("Enviando...");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus("Mensaje enviado con éxito.");
+        setFormData({
+          nombre: "",
+          email: "",
+          telefono: "",
+          mensaje: "",
+        });
+      } else {
+        setStatus("Hubo un problema al enviar el mensaje.");
+      }
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+      setStatus("Hubo un problema al enviar el mensaje.");
+    }
   };
 
   return (
@@ -40,7 +61,7 @@ export default function Contacto() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-32 pb-8 md:pb-16" 
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-32 pb-8 md:pb-16"
       >
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-[#1b293f] mb-8 md:mb-16">
           Contacto
@@ -65,6 +86,7 @@ export default function Contacto() {
                 value={formData.nombre}
                 onChange={handleChange}
                 required
+                className="text-gray-900 placeholder-gray-500"
               />
               <Input
                 type="email"
@@ -73,6 +95,7 @@ export default function Contacto() {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                className="text-gray-900 placeholder-gray-500"
               />
               <Input
                 type="tel"
@@ -80,6 +103,7 @@ export default function Contacto() {
                 placeholder="Teléfono"
                 value={formData.telefono}
                 onChange={handleChange}
+                className="text-gray-900 placeholder-gray-500"
               />
               <Textarea
                 name="mensaje"
@@ -88,6 +112,7 @@ export default function Contacto() {
                 onChange={handleChange}
                 required
                 rows={5}
+                className="text-gray-900 placeholder-gray-500"
               />
               <Button
                 type="submit"
@@ -97,6 +122,9 @@ export default function Contacto() {
                 <Send className="ml-2 h-4 w-4" />
               </Button>
             </form>
+            {status && (
+              <p className="text-center text-gray-600 mt-4">{status}</p>
+            )}
           </motion.div>
 
           {/* Contact Information */}
@@ -139,4 +167,3 @@ export default function Contacto() {
     </div>
   );
 }
-
