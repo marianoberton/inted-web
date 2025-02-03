@@ -1,50 +1,79 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Search, Calendar, DollarSign, Briefcase, Tag } from 'lucide-react';
-import Link from 'next/link';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../../firebaseConfig';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Search, Calendar, DollarSign, Briefcase, Tag } from "lucide-react";
+import Link from "next/link";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebaseConfig";
+
+// 1. Importamos useTranslation y detectamos también language si lo deseas
+import { useTranslation } from "../TranslationProvider";
 
 export default function LicitacionesPage() {
   const [licitaciones, setLicitaciones] = useState([]);
-  const [filtroCategoria, setFiltroCategoria] = useState('');
-  const [filtroTipoContratacion, setFiltroTipoContratacion] = useState('');
-  const [filtroNombre, setFiltroNombre] = useState('');
+  const [filtroCategoria, setFiltroCategoria] = useState("");
+  const [filtroTipoContratacion, setFiltroTipoContratacion] = useState("");
+  const [filtroNombre, setFiltroNombre] = useState("");
 
-  const fechaReferencia = new Date("2024-11-01");
+  // 2. Extraemos t() y, opcionalmente, language
+  const { t, language } = useTranslation();
 
+  // 3. Mapeos manuales de categorías y tipos para traducir lo que viene de Firebase
+  const categoryMap = {
+    "Sin Clasificación": "Unclassified",
+    "Tecnología e Infraestructura IT": "IT Infrastructure and Technology",
+    "Educación y Capacitación": "Education and Training",
+    "Servicios Generales": "General Services",
+    "Marketing y Comercialización": "Marketing and Commercialization",
+    "Infraestructura y Construcción": "Infrastructure and Construction",
+    "Gastronomía y Eventos": "Gastronomy and Events",
+    "Concesiones y Predios": "Concessions and Lots",
+    "Salud y Bienestar": "Health and Wellness",
+  };
+
+  const typeMap = {
+    "Contratación directa": "Direct Contracting",
+    "Contratación menor": "Minor Contracting",
+    "Licitación pública": "Public Tender",
+    "Sin Tipo de Contratación": "No Contract Type",
+  };
+
+  // 4. Tomamos cadenas del diccionario
+  const pageTitle = t("licitacionesPage", "pageTitle");
+  const filtersTitle = t("licitacionesPage", "filtersTitle");
+  const categoryLabel = t("licitacionesPage", "categoryLabel");
+  const allCategories = t("licitacionesPage", "allCategories");
+  const typeLabel = t("licitacionesPage", "typeLabel");
+  const allTypes = t("licitacionesPage", "allTypes");
+  const nameLabel = t("licitacionesPage", "nameLabel");
+  const namePlaceholder = t("licitacionesPage", "namePlaceholder");
+  const dateLabel = t("licitacionesPage", "dateLabel");
+  const unavailable = t("licitacionesPage", "unavailable");
+  const noResults = t("licitacionesPage", "noResults");
+  const liveDataNote = t("licitacionesPage", "liveDataNote");
+
+  // 5. Fallbacks para "Sin Estado", "Sin Tipo de Contratación", etc.
+  const noCategory = t("licitacionesPage", "noCategory") || "Sin Clasificación";
+  const noState = t("licitacionesPage", "noState") || "Sin Estado";
+  const noContractType =
+    t("licitacionesPage", "noContractType") || "Sin Tipo de Contratación";
+  const noName = t("licitacionesPage", "noName") || "Nombre no disponible";
+  const noDate = t("licitacionesPage", "noDate") || "Fecha no disponible";
+
+  // Función para parsear monto
   const parseMonto = (montoStr) => {
-    if (!montoStr || typeof montoStr !== "string") return "No disponible";
-  
+    if (!montoStr || typeof montoStr !== "string") return unavailable;
     try {
       let montoClean = montoStr.replace(/[^0-9,.-]/g, "").trim();
       montoClean = montoClean.replace(/\./g, "");
       montoClean = montoClean.replace(/,/g, ".");
       const monto = parseFloat(montoClean);
-      return isNaN(monto) ? "No disponible" : monto;
+      return isNaN(monto) ? unavailable : monto;
     } catch (error) {
       console.error("Error al procesar el monto:", error);
-      return "No disponible";
+      return unavailable;
     }
-  };
-  
-  
-
-  const parseFecha = (fechaStr) => {
-    if (!fechaStr) return "Fecha no disponible";
-    const [datePart] = fechaStr.split(" ");
-    const [day, month, year] = datePart.split("/");
-    return `${day}/${month}/${year}`;
-  };
-
-  const toTitleCase = (str) => {
-    return str
-      .toLowerCase()
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
   };
 
   useEffect(() => {
@@ -52,202 +81,238 @@ export default function LicitacionesPage() {
       try {
         const querySnapshot = await getDocs(collection(db, "procesos-bac-dashboard"));
         const documents = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  
+
+        const today = new Date();
+
         const licitacionesData = documents
-          .filter((doc) => doc.categoria_general && doc.categoria_general !== "Sin Clasificación")
+          .filter(
+            (doc) => doc.categoria_general && doc.categoria_general !== noCategory
+          )
           .map((doc) => {
-            let nombreProceso = "Nombre no disponible";
+            let nombreProceso = noName;
             let monto = 0;
-            let tipoContratacion = "Sin Tipo de Contratación";
-            let fechaApertura = "Fecha no disponible";
-  
+            let tipoContratacion = noContractType;
+            let fechaApertura = noDate;
+            let estado = noState;
+            let categoria = doc.categoria_general || noCategory;
+
+            // 1. Parseamos informacion_basica
             try {
               const informacionBasica = JSON.parse(doc.informacion_basica || "{}");
-              nombreProceso = informacionBasica.nombre_proceso
-                ? toTitleCase(informacionBasica.nombre_proceso)
-                : "Nombre no disponible";
-              tipoContratacion = informacionBasica.procedimiento_seleccion || "Sin Tipo de Contratación";
+              if (informacionBasica.nombre_proceso) {
+                nombreProceso = informacionBasica.nombre_proceso
+                  .toLowerCase()
+                  .replace(/\b\w/g, (c) => c.toUpperCase());
+              }
+              tipoContratacion =
+                informacionBasica.procedimiento_seleccion || noContractType;
             } catch (error) {
               console.error("Error al parsear informacion_basica:", error);
             }
-  
+
+            // 2. Parseamos monto_duracion
             try {
               const montoDuracion = JSON.parse(doc.monto_duracion || "{}");
-              console.log("Monto duracion original:", montoDuracion.monto);
-
               monto = parseMonto(montoDuracion.monto);
-              console.log("Monto procesado:", monto);
-
             } catch (error) {
               console.error("Error al parsear monto_duracion:", error);
             }
-  
+
+            // 3. Parseamos cronograma
             try {
               const cronograma = JSON.parse(doc.cronograma || "{}");
               if (cronograma.fecha_acto_apertura) {
-                console.log("Fecha acto apertura original:", cronograma.fecha_acto_apertura);
-                // Dividir fecha y hora
-                const [datePart, timePart] = cronograma.fecha_acto_apertura.split(" ");
+                const [datePart, timePart] =
+                  cronograma.fecha_acto_apertura.split(" ");
                 let [day, month, year] = datePart.split("/");
-            
-                // Normalizar a dos dígitos
                 day = day.padStart(2, "0");
                 month = month.padStart(2, "0");
-            
-                // Crear fecha en formato ISO
                 const formattedDate = `${year}-${month}-${day}T${timePart}`;
-                console.log("Fecha formateada:", formattedDate);
-            
                 const dateObj = new Date(formattedDate);
-                if (isNaN(dateObj.getTime())) {
-                  console.warn("Fecha no válida procesada:", formattedDate);
-                  fechaApertura = "Fecha no disponible";
-                } else {
+                if (!isNaN(dateObj.getTime())) {
                   fechaApertura = dateObj;
                 }
               }
             } catch (error) {
               console.error("Error al procesar cronograma:", error);
             }
-            
-  
+
+            // 4. Estado
+            estado = doc.estado || noState;
+
+            // 5. Aplicamos el mapeo si el idioma es inglés
+            if (language === "en") {
+              categoria = categoryMap[categoria] || categoria;
+              tipoContratacion = typeMap[tipoContratacion] || tipoContratacion;
+            }
+
             return {
               id: doc.id,
               nombre: nombreProceso,
-              categoria: doc.categoria_general,
+              categoria,
               tipoContratacion,
               fechaApertura,
               monto,
-              estado: doc.estado || "Sin Estado",
+              estado,
             };
-          });
-  
-        // Filtrar por fecha igual o posterior al día de hoy
-        const today = new Date();
-        const filteredLicitaciones = licitacionesData.filter((licitacion) => {
-          return licitacion.fechaApertura instanceof Date && licitacion.fechaApertura >= today;
-        });
+          })
+          // Filtramos por fecha >= hoy
+          .filter((licitacion) => {
+            return (
+              licitacion.fechaApertura instanceof Date &&
+              licitacion.fechaApertura >= today
+            );
+          })
+          // Ordenar desc por fecha
+          .sort((a, b) => b.fechaApertura - a.fechaApertura)
+          // Convertir la fecha a string legible
+          .map((licitacion) => ({
+            ...licitacion,
+            fechaApertura:
+              licitacion.fechaApertura instanceof Date
+                ? licitacion.fechaApertura.toLocaleDateString("es-AR")
+                : licitacion.fechaApertura,
+          }));
 
-        // Ordenar por fecha (más reciente primero)
-        filteredLicitaciones.sort((a, b) => b.fechaApertura - a.fechaApertura);
-
-
-  
-        // Convertir fechas a formato legible después de ordenar
-        const formattedLicitaciones = filteredLicitaciones.map((licitacion) => ({
-          ...licitacion,
-          fechaApertura: licitacion.fechaApertura instanceof Date
-            ? licitacion.fechaApertura.toLocaleDateString("es-AR")
-            : licitacion.fechaApertura,
-        }));
-  
-        setLicitaciones(formattedLicitaciones);
+        setLicitaciones(licitacionesData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
-    fetchLicitaciones();
-  }, []);
-  
-  
-  
-  
-  
 
+    fetchLicitaciones();
+  }, [language]); // <-- Reprocesa al cambiar idioma
+
+  // Función de filtrado
   const filtrarLicitaciones = () => {
     return licitaciones.filter((licitacion) => {
-      const categoriaCoincide = filtroCategoria ? licitacion.categoria === filtroCategoria : true;
-      const tipoContratacionCoincide = filtroTipoContratacion ? licitacion.tipoContratacion === filtroTipoContratacion : true;
+      const categoriaCoincide = filtroCategoria
+        ? licitacion.categoria === filtroCategoria
+        : true;
+      const tipoContratacionCoincide = filtroTipoContratacion
+        ? licitacion.tipoContratacion === filtroTipoContratacion
+        : true;
       const nombreCoincide = filtroNombre
         ? licitacion.nombre.toLowerCase().includes(filtroNombre.toLowerCase())
         : true;
-  
-      // Eliminar la validación de fechas
+
       return categoriaCoincide && tipoContratacionCoincide && nombreCoincide;
     });
   };
-  
 
   const licitacionesFiltradas = filtrarLicitaciones();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-32 pb-16">
       <div className="container mx-auto px-4">
-        <motion.h1 
+        {/* Título principal */}
+        <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-4xl md:text-5xl font-bold text-[#1b293f] mb-6 text-center"
         >
-          Próximas Licitaciones
+          {pageTitle}
         </motion.h1>
+
+        {/* Subtítulo (opcional) */}
         <motion.p
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-xl text-center text-gray-600 mb-12"
         >
-          
+          {/* t("licitacionesPage","pageSubtitle") si lo deseas */}
         </motion.p>
 
-        <motion.div 
+        {/* Contenedor de Filtros */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className="bg-white rounded-xl shadow-lg p-6 mb-12"
         >
-          <h2 className="text-2xl font-semibold text-[#1b293f] mb-6">Filtros de Búsqueda</h2>
+          <h2 className="text-2xl font-semibold text-[#1b293f] mb-6">
+            {filtersTitle}
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Filtro Categoría */}
             <div>
-              <label htmlFor="categoria" className="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+              <label
+                htmlFor="categoria"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                {categoryLabel}
+              </label>
               <select
                 id="categoria"
                 value={filtroCategoria}
                 onChange={(e) => setFiltroCategoria(e.target.value)}
                 className="w-full px-4 py-2 rounded-md shadow-sm text-[#1b293f] bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1b293f]"
               >
-                <option value="">Todas las categorías</option>
-                {[...new Set(licitaciones.map((data) => data.categoria))].map((categoria) => (
-                  <option key={categoria} value={categoria}>
-                    {categoria}
-                  </option>
-                ))}
+                <option value="">{allCategories}</option>
+                {[...new Set(licitaciones.map((data) => data.categoria))].map(
+                  (categoria) => (
+                    <option key={categoria} value={categoria}>
+                      {categoria}
+                    </option>
+                  )
+                )}
               </select>
             </div>
+
+            {/* Filtro Tipo */}
             <div>
-              <label htmlFor="tipoContratacion" className="block text-sm font-medium text-gray-700 mb-1">Tipo de Contratación</label>
+              <label
+                htmlFor="tipoContratacion"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                {typeLabel}
+              </label>
               <select
                 id="tipoContratacion"
                 value={filtroTipoContratacion}
                 onChange={(e) => setFiltroTipoContratacion(e.target.value)}
                 className="w-full px-4 py-2 rounded-md shadow-sm text-[#1b293f] bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1b293f]"
               >
-                <option value="">Todos los tipos</option>
-                {[...new Set(licitaciones.map((data) => data.tipoContratacion))].map((tipo) => (
+                <option value="">{allTypes}</option>
+                {[
+                  ...new Set(licitaciones.map((data) => data.tipoContratacion)),
+                ].map((tipo) => (
                   <option key={tipo} value={tipo}>
                     {tipo}
                   </option>
                 ))}
               </select>
             </div>
+
+            {/* Filtro Nombre */}
             <div>
-              <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">Buscar por nombre</label>
+              <label
+                htmlFor="nombre"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                {nameLabel}
+              </label>
               <div className="relative">
                 <input
                   id="nombre"
                   type="text"
                   value={filtroNombre}
                   onChange={(e) => setFiltroNombre(e.target.value)}
-                  placeholder="Nombre de la licitación"
+                  placeholder={namePlaceholder}
                   className="w-full px-4 py-2 rounded-md shadow-sm text-[#1b293f] bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1b293f] pl-10"
                 />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Search
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
               </div>
             </div>
           </div>
         </motion.div>
 
+        {/* Lista de licitaciones */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -264,44 +329,49 @@ export default function LicitacionesPage() {
                   className="bg-white rounded-xl shadow-lg overflow-hidden"
                 >
                   <div className="p-6 border-b border-gray-200">
-                    <h3 className="text-xl font-bold text-[#1b293f] mb-2">{licitacion.nombre}</h3>
+                    <h3 className="text-xl font-bold text-[#1b293f] mb-2">
+                      {licitacion.nombre}
+                    </h3>
                     <div className="flex items-center text-gray-600 mb-2">
                       <Tag size={16} className="mr-2" />
                       <span className="text-sm">{licitacion.categoria}</span>
                     </div>
                     <div className="flex items-center text-gray-600 mb-2">
                       <Briefcase size={16} className="mr-2" />
-                      <span className="text-sm">{licitacion.tipoContratacion}</span>
+                      <span className="text-sm">
+                        {licitacion.tipoContratacion}
+                      </span>
                     </div>
                   </div>
                   <div className="p-6 bg-gray-50">
                     <div className="flex items-center justify-between mb-4">
-                     <div className="flex items-center text-gray-600">
-                      <Calendar size={16} className="mr-2" />
-                      <span className="text-sm">Fecha de apertura: {licitacion.fechaApertura}</span>
-                    </div>
-
+                      <div className="flex items-center text-gray-600">
+                        <Calendar size={16} className="mr-2" />
+                        <span className="text-sm">
+                          {dateLabel}: {licitacion.fechaApertura}
+                        </span>
+                      </div>
                       <div className="flex items-center text-gray-600">
                         <DollarSign size={16} className="mr-2" />
                         <span className="text-sm font-semibold">
-                          {licitacion.monto === "No disponible"
-                            ? "No disponible"
+                          {licitacion.monto === unavailable
+                            ? unavailable
                             : licitacion.monto.toLocaleString("es-AR")}
                         </span>
                       </div>
-
                     </div>
                   </div>
-
                 </motion.div>
               ))}
             </div>
           ) : (
-            <p className="text-center text-gray-600 text-xl">No se encontraron licitaciones para los filtros seleccionados.</p>
+            <p className="text-center text-gray-600 text-xl">{noResults}</p>
           )}
         </motion.div>
+
+        {/* Leyenda explicando que los datos en vivo no se traducen */}
+        <p className="text-sm text-gray-500 mt-8 text-center">{liveDataNote}</p>
       </div>
     </div>
   );
 }
-

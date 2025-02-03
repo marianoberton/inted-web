@@ -8,47 +8,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const carouselItems = [
-  {
-    title: "Contrataciones",
-    items: [
-      "Convenio marco",
-      "Concesiones",
-      "Obra pública",
-      "Servicios y suministros",
-    ],
-    image: "/images/biblioratos1.jpeg",
-    description:
-      "Nos encargamos de la gestión integral de contratos y licitaciones para servicios públicos y privados",
-  },
-  {
-    title: "Locales gastronómicos y comerciales",
-    image: "/images/locales_comerciales.jpeg",
-    description:
-      "Logramos la habilitacion de distintos locales gastronomicos y comerciales",
-  },
-  {
-    title: "Oficinas comerciales",
-    image: "/images/oficina.jpeg",
-    description: "Nos encargamos de la gestión integral de proyectos de oficinas",
-  },
-  {
-    title: "Predios Deportivos",
-    image: "/images/predios.jpeg",
-    description: "Participamos en procesos donde se logro la adjudicación de predios",
-  },
-  {
-    title: "Edificios de Vivienda",
-    image: "/images/viviendas.jpeg",
-    description: "Lideramos proyectos desde su planificacion hasta su ejecución",
-  },
-  {
-    title: "Servicios de Limpieza y Mantenimiento",
-    image: "/images/limpieza.jpeg",
-    description:
-      "Logramos la adjudicación de licitaciones del servicio de Limpieza y Mantenimiento",
-  },
-];
+// 1. Importar useTranslation
+import { useTranslation } from "../TranslationProvider";
 
 const CustomArrow = ({ direction, onClick }) => (
   <button
@@ -66,9 +27,16 @@ const CustomArrow = ({ direction, onClick }) => (
   </button>
 );
 
-const RecurringJobsCarousel = () => {
+export default function RecurringJobsCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // 2. Extrae t() del context
+  const { t } = useTranslation();
+
+  // 3. Lee los “slides” del diccionario
+  const slides = t("recurringJobsCarousel", "slides");
+
+  // 4. Ajusta tus settings del slider
   const settings = {
     dots: true,
     infinite: true,
@@ -88,7 +56,9 @@ const RecurringJobsCarousel = () => {
     customPaging: (i) => (
       <button
         className={`w-3 h-3 rounded-full transition-all duration-300 ${
-          i === currentSlide ? "bg-white scale-125" : "bg-white/50 hover:bg-white/70"
+          i === currentSlide
+            ? "bg-white scale-125"
+            : "bg-white/50 hover:bg-white/70"
         }`}
       />
     ),
@@ -102,7 +72,7 @@ const RecurringJobsCarousel = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl font-bold mb-12 text-center text-[#1b293f]"
         >
-          Trabajos Recurrentes
+          {t("recurringJobsCarousel", "sectionTitle")}
         </motion.h2>
 
         <motion.p
@@ -111,12 +81,12 @@ const RecurringJobsCarousel = () => {
           transition={{ delay: 0.2 }}
           className="text-center text-gray-600 mb-12 max-w-2xl mx-auto"
         >
-          Experiencia comprobada en soluciones integrales para cada sector
+          {t("recurringJobsCarousel", "sectionSubtitle")}
         </motion.p>
 
         <div className="relative group">
           <Slider {...settings}>
-            {carouselItems.map((item, index) => (
+            {slides.map((item, index) => (
               <div key={index} className="outline-none px-4">
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -170,6 +140,4 @@ const RecurringJobsCarousel = () => {
       </div>
     </div>
   );
-};
-
-export default RecurringJobsCarousel;
+}

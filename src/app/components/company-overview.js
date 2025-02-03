@@ -3,6 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from "./ui/button";
+// 1. Importa useTranslation
+import { useTranslation } from '../TranslationProvider';
 
 export default function CompanyOverview() {
   const containerVariants = {
@@ -10,8 +12,8 @@ export default function CompanyOverview() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeInOut" }
-    }
+      transition: { duration: 0.8, ease: "easeInOut" },
+    },
   };
 
   const textVariants = {
@@ -19,9 +21,12 @@ export default function CompanyOverview() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeInOut", delay: 0.3 }
-    }
+      transition: { duration: 0.6, ease: "easeInOut", delay: 0.3 },
+    },
   };
+
+  // 2. Extrae t()
+  const { t } = useTranslation();
 
   return (
     <section className="py-16 bg-[#f4f3f1]">
@@ -37,26 +42,26 @@ export default function CompanyOverview() {
             className="text-4xl md:text-5xl font-bold text-[#1b293f] mb-6"
             variants={textVariants}
           >
-            Innovación y calidad en consultoría
+            {t("companyOverview", "heading")}
           </motion.h2>
           <motion.p
             className="text-lg text-[#1b293f] mb-6 leading-relaxed"
             variants={textVariants}
           >
-            Inted es una consultora innovadora que brinda asesoramiento integral en la gestión de proyectos constructivos y en materia de licitaciones públicas y/o privadas, garantizando la celeridad y eficiencia en cada etapa del proceso.
+            {t("companyOverview", "paragraph1")}
           </motion.p>
           <motion.p
             className="text-lg text-[#1b293f] mb-8 leading-relaxed"
             variants={textVariants}
           >
-            
-            Ofrecemos un amplio rango de servicios, que abarcan la gestoría de trámites constructivos y confección de ofertas para licitaciones públicas y/o privadas. Contamos con un equipo multidisciplinario de profesionales que combina experiencia en el ámbito público/privado.          </motion.p>
+            {t("companyOverview", "paragraph2")}
+          </motion.p>
           <motion.div variants={textVariants}>
             <Button
               className="bg-[#1b293f] text-white hover:bg-[#bfbfbf] hover:text-[#1b293f]"
-              onClick={() => window.location.href = '/quienes-somos'}
+              onClick={() => (window.location.href = '/quienes-somos')}
             >
-              Ver más
+              {t("companyOverview", "button")}
             </Button>
           </motion.div>
         </div>

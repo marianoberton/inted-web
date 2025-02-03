@@ -1,8 +1,12 @@
+"use client";
+
 import './globals.css';
 import { Open_Sans } from 'next/font/google';
 import Navbar from './components/Navbar.jsx';
 import Footer from "./components/layout/Footer.jsx";
 import WhatsAppButton from './components/WhatsAppButton';
+// 1. Importamos nuestro provider
+import TranslationProvider from "./TranslationProvider";
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -24,12 +28,17 @@ export default function Layout({ children }) {
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="font-sans">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppButton phoneNumber="1234567890" message="Hola, me gustaría obtener más información sobre Inted." />
+        {/* 2. Envolvemos todo en TranslationProvider */}
+        <TranslationProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <WhatsAppButton
+            phoneNumber="1234567890"
+            message="Hola, me gustaría obtener más información sobre Inted."
+          />
+        </TranslationProvider>
       </body>
     </html>
   );
 }
-

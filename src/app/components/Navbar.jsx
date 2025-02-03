@@ -6,17 +6,19 @@ import Image from "next/image";
 import { Menu, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 
+// 1. Importamos useTranslation
+import { useTranslation } from '../TranslationProvider';
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [language, setLanguage] = useState("es");
+
+  // 2. Extraemos language y setLanguage del context + la función t
+  const { language, setLanguage, t } = useTranslation();
+
   const pathname = usePathname();
-  const isTransparentPage = [
-    "/",
-    "/consultoria-licitaciones",
-    "/proyectos-constructivos",
-  ].includes(pathname);
+  const isTransparentPage = ["/", "/consultoria-licitaciones", "/proyectos-constructivos"].includes(pathname);
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,11 +34,7 @@ export default function Navbar() {
   useEffect(() => {
     if (isTransparentPage) {
       const handleScroll = () => {
-        if (window.scrollY > 50) {
-          setScrolled(true);
-        } else {
-          setScrolled(false);
-        }
+        setScrolled(window.scrollY > 50);
       };
       window.addEventListener("scroll", handleScroll);
       return () => window.removeEventListener("scroll", handleScroll);
@@ -49,23 +47,24 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
+  // 3. En lugar de strings en duro, usamos t("navbar","...").
   const navItems = [
-    { name: "Quiénes Somos", path: "/quienes-somos" },
+    { name: t("navbar", "quienesSomos"), path: "/quienes-somos" },
     {
-      name: "Áreas de Práctica",
+      name: t("navbar", "areasPractica"),
       dropdown: [
         {
-          name: "Licitaciones Públicas y/o Privadas",
+          name: t("navbar", "licitacionesPublicasPrivadas"),
           path: "/consultoria-licitaciones",
         },
         {
-          name: "Desarrollo de Proyectos Constructivos",
+          name: t("navbar", "proyectosConstructivos"),
           path: "/proyectos-constructivos",
         },
       ],
     },
-    { name: "Licitaciones", path: "/licitaciones" },
-    { name: "Contacto", path: "/contacto" },
+    { name: t("navbar", "licitaciones"), path: "/licitaciones" },
+    { name: t("navbar", "contacto"), path: "/contacto" },
   ];
 
   return (
@@ -94,7 +93,7 @@ export default function Navbar() {
               }
               alt="Logo"
               width={isMobile ? 80 : 160}
-              height={isMobile ? 40 : 60} // Reduce el alto
+              height={isMobile ? 40 : 60} // Ajusta tamaños
             />
           </Link>
         </div>
@@ -155,7 +154,7 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        {/* Language Switcher y Menú */}
+        {/* Language Switcher y Menú móvil */}
         <div className="hidden md:flex items-center space-x-4">
           {/* Language Switcher */}
           <div className="flex items-center space-x-2">

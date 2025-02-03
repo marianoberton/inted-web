@@ -2,60 +2,43 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { FileText, FileEdit, Briefcase, ClipboardList, ArrowRight } from "lucide-react";
-import IconShowcaseLicitaciones from "../components/IconShowcaseLicitaciones"; // Asegúrate de que el archivo exista y esté correctamente nombrado
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import IconShowcaseLicitaciones from "../components/IconShowcaseLicitaciones";
 
-const servicios = [
-  {
-    icon: FileEdit,
-    title: "Elaboración de Ofertas e Impugnaciones",
-    details: [
-      "Análisis de pliegos de bases y condiciones licitatorios",
-      "Inscripción ante Registros de Proveedores",
-      "Confección de documentación administrativa, técnica y oferta económica",
-      "Confección de anteproyectos de obra y memorias descriptivas",
-      "Análisis de ofertas de competidores y formulación de observaciones",
-      "Elaboración de impugnaciones a dictámenes de evaluación de ofertas",
-    ],
-  },
-  {
-    icon: Briefcase,
-    title: "Ejecución del Proyecto Licitado",
-    details: [
-      "Confección de cuadros de seguimiento de evolución de índices",
-      "Presentación de solicitudes de adecuaciones de precios",
-      "Presentación de documentación requerida por pliegos",
-      "Solicitudes de reconocimiento de mayores costos por inversiones adicionales",
-      "Representación técnica y administrativa ante los organismos correspondientes",
-    ],
-  },
-  {
-    icon: FileText,
-    title: "Confección de Documentación Licitatoria",
-    details: [
-      "Pliegos de bases y condiciones generales y particulares",
-      "Especificaciones técnicas",
-      "Circulares aclaratorias y/o modificatorias",
-      "Dictámenes de evaluación de ofertas",
-      "Contratos administrativos y/o comerciales",
-      "Actas de recepción y certificados de liquidación final",
-    ],
-  },
-  {
-    icon: ClipboardList,
-    title: "Gestión de Procedimientos Licitatorios",
-    details: [
-      "Gestión de invitaciones a potenciales oferentes",
-      "Análisis de consultas y elaboración de respuestas",
-      "Gestión del acto de apertura de ofertas",
-      "Evaluación de ofertas y solicitud de aclaraciones",
-      "Asesoramiento durante la ejecución contractual",
-    ],
-  },
-];
+// 1. Importamos useTranslation
+import { useTranslation } from "../TranslationProvider";
 
+// Mapeo de iconos (por nombre a componente). 
+// Viene de lucide-react, adaptado a tus necesidades.
+import {
+  FileEdit,
+  Briefcase,
+  FileText,
+  ClipboardList,
+} from "lucide-react";
+
+// Creamos un objeto que asocia string -> Componente
+const IconsMap = {
+  FileEdit,
+  Briefcase,
+  FileText,
+  ClipboardList,
+};
 
 export default function ConsultoriaLicitaciones() {
+  // 2. Extraemos la función t() 
+  const { t } = useTranslation();
+
+  // 3. Leemos los datos de la sección consultoriaLicitaciones
+  const headerTitle = t("consultoriaLicitaciones", "headerTitle");
+  const headerParagraph = t("consultoriaLicitaciones", "headerParagraph");
+  const headerImage = t("consultoriaLicitaciones", "headerImage");
+  const servicesTitle = t("consultoriaLicitaciones", "servicesTitle");
+
+  // servicesArray es el array con icon/title/details
+  const servicios = t("consultoriaLicitaciones", "servicesArray");
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
       {/* Header Section */}
@@ -66,58 +49,64 @@ export default function ConsultoriaLicitaciones() {
         className="flex flex-col md:flex-row items-center bg-[#1b293f] text-white py-40 px-8 sm:px-12 lg:px-16 relative"
       >
         <div className="flex-1 max-w-md z-10 md:mr-8">
-          <h1 className="text-5xl font-bold mb-6">Consultoría en Licitaciones Públicas y/o Privadas</h1>
-          <p className="text-lg mb-6">
-            Nuestro asesoramiento abarca todas las etapas de una licitación pública y/o privada, desde la confección de
-            la documentación licitatoria hasta la ejecución del proyecto adjudicado.
-          </p>
+          <h1 className="text-5xl font-bold mb-6">{headerTitle}</h1>
+          <p className="text-lg mb-6">{headerParagraph}</p>
         </div>
         <div className="flex-1 w-full h-full md:h-auto">
           <div
             className="w-full h-80 bg-cover bg-center rounded-lg shadow-lg"
-            style={{ backgroundImage: "url('/images/licitaciones.jpg')" }}
+            style={{ backgroundImage: `url('${headerImage}')` }}
           ></div>
         </div>
       </motion.div>
 
       {/* Icon Showcase Section */}
+      {/* Este componente leerá de "circleServices" en el diccionario */}
       <IconShowcaseLicitaciones />
 
       {/* Services Section */}
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">Nuestros Servicios</h2>
+        <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">
+          {servicesTitle}
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {servicios.map((item, index) => {
-            const IconComponent = item.icon;
+          {Array.isArray(servicios) &&
+            servicios.map((item, index) => {
+              // 4. Tomamos el icon string y buscamos el componente
+              const IconComponent = IconsMap[item.icon] || FileText;
 
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105"
-              >
-                <div className="bg-[#1b293f] p-6 flex flex-col items-center justify-center min-h-[200px]">
-                  <div className="bg-white p-3 rounded-full mb-4 flex items-center justify-center">
-                    <IconComponent className="w-10 h-10 text-[#1b293f]" />
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105"
+                >
+                  <div className="bg-[#1b293f] p-6 flex flex-col items-center justify-center min-h-[200px]">
+                    <div className="bg-white p-3 rounded-full mb-4 flex items-center justify-center">
+                      <IconComponent className="w-10 h-10 text-[#1b293f]" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white text-center">
+                      {item.title}
+                    </h3>
                   </div>
-                  <h3 className="text-xl font-semibold text-white text-center">{item.title}</h3>
-                </div>
-                <div className="p-6 flex items-center justify-center min-h-[160px]">
-                  <ul className="space-y-2">
-                    {item.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <ArrowRight className="w-4 h-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm">{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            );
-          })}
+                  <div className="p-6 flex items-center justify-center min-h-[160px]">
+                    <ul className="space-y-2">
+                      {item.details.map((detail, idx) => (
+                        <li key={idx} className="flex items-start">
+                          <ArrowRight className="w-4 h-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
+                          <span className="text-gray-700 text-sm">
+                            {detail}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              );
+            })}
         </div>
       </div>
     </div>

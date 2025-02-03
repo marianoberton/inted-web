@@ -2,6 +2,13 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+
+// Importa useTranslation
+import { useTranslation } from "../TranslationProvider";
+
+// Mapeo de íconos
 import {
   Building,
   Ruler,
@@ -11,104 +18,35 @@ import {
   FileCheck,
   Hammer,
   Layers,
-  ArrowRight,
   PenLine,
 } from "lucide-react";
-import IconShowcase from '../components/IconShowcase';
 
-const servicios = [
-  {
-    icon: FileCheck,
-    title: "Análisis de Factibilidad del Proyecto Constructivo",
-    details: [
-      "Análisis integral de aspectos morfológicos e interiorismo del anteproyecto",
-      "Evaluación de usos requeridos",
-      "Verificación de disposiciones del Código Urbanístico y de Edificación",
-      "Informe de factibilidad de proyecto constructivo",
-    ],
-  },
-  {
-    icon: PenLine,
-    title: "Plano de Etapa de Proyecto y Permiso de Obra Civil",
-    details: [
-      "Adecuación de planos de arquitectura al formato municipal",
-      "Tramitación de informes de dominio y certificados de aptitud ambiental",
-      "Modificaciones de proyectos",
-      "Seguimiento continuo del trámite con informes semanales",
-    ],
-  },
-  {
-    icon: Building,
-    title: "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, Ventilación, Mecánica/Electromecánica)",
-    details: [
-      "Adecuación de los planos de instalaciones al formato municipal",
-      "Tramitación de informes de dominio y certificados de aptitud ambiental",
-      "Seguimiento continuo del trámite e informes de subsanaciones",
-      "Conforme de obra de instalaciones. Incendio de obras instalaciones etc.",
-    ],
-  },
-  {
-    icon: Ruler,
-    title: "Plano de Mensura y Unificación Parcelaria",
-    details: [
-      "Adecuación del plano a formato municipal",
-      "Tramitación de informes de dominio",      
-      "Informe de subsanaciones y adecuaciones correspondientes",
-      "Seguimiento continuo del trámite con informes de situación semanal.",
-    ],
-  },
-  {
-    icon: Hammer,
-    title: "Plano de Demolición",
-    details: [
-      "Elaboración del plano de demolición con antecedentes de cada parcela",
-      "Mediciones correspondientes",
-      "Adecuación del plano a formato municipal",
-      "Seguimiento del trámite e informes de subsanaciones",
-    ],
-  },
-  {
-    icon: HardHat,
-    title: "Portal Director de Obra",
-    details: [
-      "Gestión de trámites de solicitud de excavaciones",
-      "Gestión de trámites de demoliciones",
-      "Solicitud de alta de obra, cartel de obra, (AVO 1, 2 y 3)",
-      "Seguimiento continuo del trámite con informes semanales",
-    ],
-  },
-  {
-    icon: Home,
-    title: "Conforme a Obra (AVO 4)",
-    details: [
-      "Adecuación de planos de arquitectura de obra ejecutada a formato municipal",
-      "Tramitación de informes de dominio y certificados de aptitud ambiental",
-      "Regularización de Obra en Contravención y Ajuste de Obra",
-      "Seguimiento continuo del trámite con reportes semanales",
-    ],
-  },
-  {
-    icon: Layers,
-    title: "División en Propiedad Horizontal (MH)",
-    details: [
-      "Adecuación del plano a formato municipal",
-      "Tramitación de informes de dominio",
-      "Tramitación ante registro de la propiedad inmueble",
-      "Seguimiento del trámite e informes de subsanaciones",
-    ],
-  },
-];
-
-const beneficios = [
-  "Asesoramiento integral y especializado en la realización de proyectos constructivos.",
-  "Acompañamiento en todas las etapas del proyecto, asegurando el cumplimiento de la normativa vigente.",
-  "Reducción de tiempos en la tramitación de permisos y licencias.",
-  "Expertos en la gestión de planos, permisos y regularizaciones, facilitando el proceso constructivo.",
-  "Flexibilidad en la contratación de servicios según las necesidades del cliente, ya sea de forma individual o grupal.",
-  "Actualización continua mediante informes semanales, proporcionando transparencia y tranquilidad al cliente.",
-];
+// Diccionario local de iconos:
+const IconsMap = {
+  Building,
+  Ruler,
+  Briefcase,
+  HardHat,
+  Home,
+  FileCheck,
+  Hammer,
+  Layers,
+  PenLine,
+};
 
 export default function ConsultoriaProyectosConstructivos() {
+  // 1. Extraemos t()
+  const { t } = useTranslation();
+
+  // 2. Leemos datos del diccionario
+  const headerTitle = t("proyectosConstructivos", "headerTitle");
+  const headerParagraph = t("proyectosConstructivos", "headerParagraph");
+  const headerImage = t("proyectosConstructivos", "headerImage");
+  const servicesTitle = t("proyectosConstructivos", "servicesTitle");
+
+  // 3. Array de servicios
+  const servicios = t("proyectosConstructivos", "servicesArray");
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
       {/* Header Section */}
@@ -119,63 +57,71 @@ export default function ConsultoriaProyectosConstructivos() {
         className="flex flex-col md:flex-row items-center bg-[#1b293f] text-white py-40 px-8 sm:px-12 lg:px-16 relative"
       >
         <div className="flex-1 max-w-md z-10 md:mr-8">
-          <h1 className="text-5xl font-bold mb-6">Consultoría en Desarrollo de Proyectos Constructivos.</h1>
-          <p className="text-lg mb-6">
-            Nuestro asesoramiento integral en la gestoría de trámites requeridos para la realización de proyectos constructivos.
-            
-          </p>
+          <h1 className="text-5xl font-bold mb-6">{headerTitle}</h1>
+          <p className="text-lg mb-6">{headerParagraph}</p>
         </div>
         <div className="flex-1 w-full h-full md:h-auto">
           <div
             className="w-full h-80 bg-cover bg-center rounded-lg shadow-lg"
-            style={{ backgroundImage: "url('/images/proyectos.jpg')" }}
+            style={{ backgroundImage: `url('${headerImage}')` }}
           ></div>
         </div>
       </motion.div>
 
-      {/* Icon Showcase Section */}
-      <IconShowcase />
+      {/* Icon Showcase Section (componente circular) */}
+      {/* Reemplaza tu import "import IconShowcase from..." por el real */}
+      {/* O usa <CircularServiceShowcase /> si así se llama tu componente */}
+      {/* <IconShowcase /> o <CircularServiceShowcase /> */}
+
 
       {/* Services Section */}
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">Nuestros Servicios</h2>
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-content-center"
-        >
-          {servicios.map((item, index) => {
-            const IconComponent = item.icon;
+        <h2 className="text-4xl font-bold mb-12 text-center text-[#1b293f]">
+          {servicesTitle}
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-content-center">
+          {Array.isArray(servicios) &&
+            servicios.map((item, index) => {
+              // Tomamos el string "icon" y buscamos en IconsMap
+              const IconComponent = IconsMap[item.icon] || FileCheck;
 
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105"
-              >
-                <div className="bg-[#1b293f] p-6 flex flex-col items-center justify-center min-h-[200px]">
-                  <div className="bg-white p-3 rounded-full mb-4 flex items-center justify-center">
-                    <IconComponent className="w-10 h-10 text-[#1b293f]" />
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105"
+                >
+                  <div className="bg-[#1b293f] p-6 flex flex-col items-center justify-center min-h-[200px]">
+                    <div className="bg-white p-3 rounded-full mb-4 flex items-center justify-center">
+                      <IconComponent className="w-10 h-10 text-[#1b293f]" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white text-center">
+                      {item.title}
+                    </h3>
                   </div>
-                  <h3 className="text-xl font-semibold text-white text-center">{item.title}</h3>
-                </div>
-                <div className="p-6">
-                  <ul className="space-y-2">
-                    {item.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <ArrowRight className="w-4 h-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm">{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            );
-          })}
+                  <div className="p-6">
+                    <ul className="space-y-2">
+                      {item.details.map((detail, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-start"
+                        >
+                          <ArrowRight className="w-4 h-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
+                          <span className="text-gray-700 text-sm">
+                            {detail}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              );
+            })}
         </div>
       </div>
-
     </div>
   );
 }

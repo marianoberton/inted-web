@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Send } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
+
+// 1. Importamos useTranslation
+import { useTranslation } from "../TranslationProvider";
 
 export default function Contacto() {
   const [formData, setFormData] = useState({
@@ -17,6 +20,29 @@ export default function Contacto() {
 
   const [status, setStatus] = useState("");
 
+  // 2. Extraemos t() para traducir
+  const { t } = useTranslation();
+
+  // 3. Obtenemos texto del diccionario
+  const pageTitle = t("contact", "pageTitle");
+  const formTitle = t("contact", "formTitle");
+  const namePlaceholder = t("contact", "namePlaceholder");
+  const emailPlaceholder = t("contact", "emailPlaceholder");
+  const phonePlaceholder = t("contact", "phonePlaceholder");
+  const messagePlaceholder = t("contact", "messagePlaceholder");
+  const sendButton = t("contact", "sendButton");
+  const statusSending = t("contact", "statusSending");
+  const statusSuccess = t("contact", "statusSuccess");
+  const statusError = t("contact", "statusError");
+
+  const contactInfoTitle = t("contact", "contactInfoTitle");
+  const addressTitle = t("contact", "addressTitle");
+  const addressLine1 = t("contact", "addressLine1");
+  const addressLine2 = t("contact", "addressLine2");
+  const addressLine3 = t("contact", "addressLine3");
+  const locationTitle = t("contact", "locationTitle");
+  const mapIframeSrc = t("contact", "mapIframeSrc");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -27,7 +53,7 @@ export default function Contacto() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("Enviando...");
+    setStatus(statusSending); // "Enviando..." o "Sending..."
 
     try {
       const response = await fetch("/api/contact", {
@@ -39,7 +65,7 @@ export default function Contacto() {
       });
 
       if (response.ok) {
-        setStatus("Mensaje enviado con éxito.");
+        setStatus(statusSuccess);
         setFormData({
           nombre: "",
           email: "",
@@ -47,11 +73,11 @@ export default function Contacto() {
           mensaje: "",
         });
       } else {
-        setStatus("Hubo un problema al enviar el mensaje.");
+        setStatus(statusError);
       }
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      setStatus("Hubo un problema al enviar el mensaje.");
+      setStatus(statusError);
     }
   };
 
@@ -63,8 +89,9 @@ export default function Contacto() {
         transition={{ duration: 0.5 }}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-32 pb-8 md:pb-16"
       >
+        {/* Título principal */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-[#1b293f] mb-8 md:mb-16">
-          Contacto
+          {pageTitle}
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
@@ -76,13 +103,13 @@ export default function Contacto() {
             className="bg-white rounded-lg shadow-xl p-6 md:p-8"
           >
             <h2 className="text-2xl font-semibold text-[#1b293f] mb-6">
-              Envíanos un mensaje
+              {formTitle}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <Input
                 type="text"
                 name="nombre"
-                placeholder="Nombre y Apellido"
+                placeholder={namePlaceholder}
                 value={formData.nombre}
                 onChange={handleChange}
                 required
@@ -91,7 +118,7 @@ export default function Contacto() {
               <Input
                 type="email"
                 name="email"
-                placeholder="Email"
+                placeholder={emailPlaceholder}
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -100,14 +127,14 @@ export default function Contacto() {
               <Input
                 type="tel"
                 name="telefono"
-                placeholder="Teléfono"
+                placeholder={phonePlaceholder}
                 value={formData.telefono}
                 onChange={handleChange}
                 className="text-gray-900 placeholder-gray-500"
               />
               <Textarea
                 name="mensaje"
-                placeholder="Mensaje"
+                placeholder={messagePlaceholder}
                 value={formData.mensaje}
                 onChange={handleChange}
                 required
@@ -118,7 +145,7 @@ export default function Contacto() {
                 type="submit"
                 className="w-full bg-[#1b293f] text-white hover:bg-[#2a3b5a]"
               >
-                Enviar mensaje
+                {sendButton}
                 <Send className="ml-2 h-4 w-4" />
               </Button>
             </form>
@@ -134,25 +161,27 @@ export default function Contacto() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="bg-[#1b293f] text-white rounded-lg shadow-xl p-6 md:p-8"
           >
-            <h2 className="text-2xl font-semibold mb-6">Información de contacto</h2>
+            <h2 className="text-2xl font-semibold mb-6">
+              {contactInfoTitle}
+            </h2>
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
                 <MapPin className="w-6 h-6 text-gray-300 mt-1" />
                 <div>
-                  <h3 className="font-semibold">Dirección</h3>
-                  <p>Av. Juramento 1475</p>
-                  <p>Ciudad Autónoma de Buenos Aires (CABA)</p>
-                  <p>Argentina</p>
+                  <h3 className="font-semibold">{addressTitle}</h3>
+                  <p>{addressLine1}</p>
+                  <p>{addressLine2}</p>
+                  <p>{addressLine3}</p>
                 </div>
               </div>
             </div>
 
             {/* Google Maps Embed */}
             <div className="mt-8">
-              <h3 className="text-xl font-semibold mb-4">Nuestra ubicación</h3>
+              <h3 className="text-xl font-semibold mb-4">{locationTitle}</h3>
               <div className="aspect-w-16 aspect-h-9">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3286.186701394429!2d-58.45733868477193!3d-34.55229808047303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb42963ff8f35%3A0x61eb7e88bba1a7ff!2sJuramento%201475%2C%20Buenos%20Aires!5e0!3m2!1sen!2sar!4v1620930128000!5m2!1sen!2sar"
+                  src={mapIframeSrc}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

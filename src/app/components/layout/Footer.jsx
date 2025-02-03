@@ -1,8 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin, MapPin } from "lucide-react";
+// 1. Importamos el hook de traducción
+import { useTranslation } from "../../TranslationProvider";
 
 export default function Footer() {
+  // 2. Extraemos la función t() del context
+  const { t } = useTranslation();
+
+  // 3. Reemplazamos los textos en duro por t("footer","...")
   return (
     <footer className="bg-[#1b293f] text-[#f4f3f1] py-12">
       <div className="container mx-auto px-6 lg:px-8">
@@ -20,14 +28,16 @@ export default function Footer() {
 
           {/* Enlaces rápidos */}
           <div className="text-center md:text-left order-1 md:order-1">
-            <h4 className="font-bold text-lg mb-4">Enlaces Rápidos</h4>
+            <h4 className="font-bold text-lg mb-4">
+              {t("footer", "quickLinks")}
+            </h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/consultoria-licitaciones"
                   className="hover:text-[#bfbfbf] transition-colors duration-200"
                 >
-                  Licitaciones Públicas y/o Privadas
+                  {t("footer", "link1")}
                 </Link>
               </li>
               <li>
@@ -35,7 +45,7 @@ export default function Footer() {
                   href="/proyectos-constructivos"
                   className="hover:text-[#bfbfbf] transition-colors duration-200"
                 >
-                  Desarrollo de Proyectos Constructivos
+                  {t("footer", "link2")}
                 </Link>
               </li>
               <li>
@@ -43,7 +53,7 @@ export default function Footer() {
                   href="/licitaciones"
                   className="hover:text-[#bfbfbf] transition-colors duration-200"
                 >
-                  Licitaciones Activas
+                  {t("footer", "link3")}
                 </Link>
               </li>
               <li>
@@ -51,7 +61,7 @@ export default function Footer() {
                   href="/contacto"
                   className="hover:text-[#bfbfbf] transition-colors duration-200"
                 >
-                  Contacto
+                  {t("footer", "link4")}
                 </Link>
               </li>
             </ul>
@@ -60,7 +70,9 @@ export default function Footer() {
           {/* Ubicación */}
           <div className="text-center md:text-right flex flex-col items-center md:items-end order-3">
             <div className="mb-6">
-              <h4 className="font-bold text-lg mb-2">Ubicación</h4>
+              <h4 className="font-bold text-lg mb-2">
+                {t("footer", "location")}
+              </h4>
               <div className="flex items-center">
                 <MapPin className="w-6 h-6 text-[#f4f3f1] mr-3" />
                 <div className="text-left">
@@ -106,10 +118,13 @@ export default function Footer() {
         {/* Barra inferior */}
         <div className="border-t border-gray-700 pt-6 mt-8 flex flex-col items-center space-y-4">
           <p className="text-sm text-[#bfbfbf]">
-            © {new Date().getFullYear()} Inted. Todos los derechos reservados.
+            {t("footer", "yearRights").replace(
+              "{year}",
+              new Date().getFullYear()
+            )}
           </p>
           <p className="text-sm text-[#bfbfbf] text-center">
-            Sitio desarrollado por Inted
+            {t("footer", "developedBy")}
           </p>
         </div>
       </div>
