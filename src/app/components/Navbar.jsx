@@ -7,14 +7,14 @@ import { Menu, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 // 1. Importamos useTranslation
-import { useTranslation } from '../TranslationProvider';
+import { useTranslation } from "../TranslationProvider";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // 2. Extraemos language y setLanguage del context + la función t
+  // 2. Extraemos language y setLanguage del context
   const { language, setLanguage, t } = useTranslation();
 
   const pathname = usePathname();
@@ -27,7 +27,6 @@ export default function Navbar() {
 
     handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -47,7 +46,7 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
-  // 3. En lugar de strings en duro, usamos t("navbar","...").
+  // Items de menú traducidos con t()
   const navItems = [
     { name: t("navbar", "quienesSomos"), path: "/quienes-somos" },
     {
@@ -98,7 +97,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Navegación */}
+        {/* Navegación Desktop */}
         <nav className="hidden md:block flex-grow">
           <ul className="flex justify-center items-center space-x-6 relative">
             {navItems.map((item, index) => (
@@ -154,9 +153,8 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        {/* Language Switcher y Menú móvil */}
+        {/* Language Switcher Desktop */}
         <div className="hidden md:flex items-center space-x-4">
-          {/* Language Switcher */}
           <div className="flex items-center space-x-2">
             <button
               className={`text-sm font-medium ${
@@ -206,6 +204,37 @@ export default function Navbar() {
       {/* Menú móvil */}
       {menuOpen && (
         <div className="md:hidden bg-white p-4">
+          {/* Language Switcher Móvil */}
+          <div className="flex items-center space-x-2 mb-4">
+            <button
+              className={`text-sm font-medium ${
+                language === "es"
+                  ? "font-bold underline text-[#1b293f]"
+                  : "text-[#1b293f] hover:opacity-70"
+              }`}
+              onClick={() => {
+                setLanguage("es");
+                setMenuOpen(false);
+              }}
+            >
+              ES
+            </button>
+            <span className="w-px h-4 bg-gray-400"></span>
+            <button
+              className={`text-sm font-medium ${
+                language === "en"
+                  ? "font-bold underline text-[#1b293f]"
+                  : "text-[#1b293f] hover:opacity-70"
+              }`}
+              onClick={() => {
+                setLanguage("en");
+                setMenuOpen(false);
+              }}
+            >
+              EN
+            </button>
+          </div>
+
           <ul className="space-y-2">
             {navItems.map((item, index) => (
               <li key={index}>
