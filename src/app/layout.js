@@ -2,6 +2,7 @@
 
 import './globals.css';
 import { Open_Sans } from 'next/font/google';
+import { Analytics } from "@vercel/analytics/react"
 import Navbar from './components/Navbar.jsx';
 import Footer from "./components/layout/Footer.jsx";
 import WhatsAppButton from './components/WhatsAppButton';
@@ -28,6 +29,7 @@ export default function Layout({ children }) {
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="font-sans">
+        <Analytics/>
         {/* 2. Envolvemos todo en TranslationProvider */}
         <TranslationProvider>
           <Navbar />
