@@ -44,7 +44,7 @@ const dictionary = {
       },
     },
     tenderPreview: {
-      title: "Licitaciones",
+      title: "Licitaciones CABA",
       categoryLabel: "Categoría:",
       description: "Licitaciones en la categoría",
       totalLabel: "Total de Procesos de Compra Activos:",
@@ -271,7 +271,7 @@ const dictionary = {
           {
             icon: "Building",
             title:
-              "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, Ventilación, Mecánica/Electromecánica)",
+              "Planos de Instalaciones (Incendios, Sanitaria, Eléctrica, Ventilación Mecánica/Electromecánica)",
             details: [
               "Adecuación de los planos de instalaciones al formato municipal",
               "Tramitación de informes de dominio y certificados de aptitud ambiental",
@@ -406,7 +406,7 @@ const dictionary = {
         
       },
       licitacionesPage: {
-        pageTitle: "Próximas Licitaciones",
+        pageTitle: "Próximas Licitaciones CABA",
         pageSubtitle: "",
         filtersTitle: "Filtros de Búsqueda",
         categoryLabel: "Categoría",
@@ -427,6 +427,10 @@ const dictionary = {
         noContractType: "Sin Tipo de Contratación",
         noName: "Nombre no disponible",
         noDate: "Fecha no disponible",
+
+        // NUEVO: Para Jurisdicción
+        jurisdictionLabel: "Jurisdicción",
+        allJurisdictions: "Todas las jurisdicciones",
       },
   
   },
@@ -471,7 +475,7 @@ const dictionary = {
       },
     },
     tenderPreview: {
-      title: "Tenders",
+      title: "Tenders CABA",
       categoryLabel: "Category:",
       description: "Tenders in category",
       totalLabel: "Total Active Purchase Processes:",
@@ -841,6 +845,10 @@ const dictionary = {
         noContractType: "No Contract Type",
         noName: "No name available",
         noDate: "Date not available",
+
+        // NUEVO: Para Jurisdicción
+        jurisdictionLabel: "Jurisdiction",
+        allJurisdictions: "All jurisdictions",
       },
 
   },

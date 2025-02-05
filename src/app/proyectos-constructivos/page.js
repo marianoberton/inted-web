@@ -4,6 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import CircularServiceShowcase from "../components/IconShowcase";
+
 
 // Importa useTranslation
 import { useTranslation } from "../TranslationProvider";
@@ -72,7 +74,8 @@ export default function ConsultoriaProyectosConstructivos() {
       {/* Reemplaza tu import "import IconShowcase from..." por el real */}
       {/* O usa <CircularServiceShowcase /> si así se llama tu componente */}
       {/* <IconShowcase /> o <CircularServiceShowcase /> */}
-
+      <CircularServiceShowcase />
+      
 
       {/* Services Section */}
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">

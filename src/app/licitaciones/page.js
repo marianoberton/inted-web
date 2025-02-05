@@ -7,7 +7,7 @@ import Link from "next/link";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 
-// 1. Importamos useTranslation y detectamos también language si lo deseas
+// 1. Importamos useTranslation
 import { useTranslation } from "../TranslationProvider";
 
 export default function LicitacionesPage() {
@@ -16,10 +16,13 @@ export default function LicitacionesPage() {
   const [filtroTipoContratacion, setFiltroTipoContratacion] = useState("");
   const [filtroNombre, setFiltroNombre] = useState("");
 
-  // 2. Extraemos t() y, opcionalmente, language
+  // NUEVO: filtroJurisdiccion
+  const [filtroJurisdiccion, setFiltroJurisdiccion] = useState("");
+
+  // 2. Extraemos t() y language
   const { t, language } = useTranslation();
 
-  // 3. Mapeos manuales de categorías y tipos para traducir lo que viene de Firebase
+  // 3. Mapeos manuales de categorías y tipos
   const categoryMap = {
     "Sin Clasificación": "Unclassified",
     "Tecnología e Infraestructura IT": "IT Infrastructure and Technology",
@@ -53,11 +56,14 @@ export default function LicitacionesPage() {
   const noResults = t("licitacionesPage", "noResults");
   const liveDataNote = t("licitacionesPage", "liveDataNote");
 
-  // 5. Fallbacks para "Sin Estado", "Sin Tipo de Contratación", etc.
+  // NUEVO: Claves para jurisdiccion
+  const jurisdictionLabel = t("licitacionesPage", "jurisdictionLabel");
+  const allJurisdictions = t("licitacionesPage", "allJurisdictions");
+
+  // Fallbacks
   const noCategory = t("licitacionesPage", "noCategory") || "Sin Clasificación";
   const noState = t("licitacionesPage", "noState") || "Sin Estado";
-  const noContractType =
-    t("licitacionesPage", "noContractType") || "Sin Tipo de Contratación";
+  const noContractType = t("licitacionesPage", "noContractType") || "Sin Tipo de Contratación";
   const noName = t("licitacionesPage", "noName") || "Nombre no disponible";
   const noDate = t("licitacionesPage", "noDate") || "Fecha no disponible";
 
@@ -85,9 +91,7 @@ export default function LicitacionesPage() {
         const today = new Date();
 
         const licitacionesData = documents
-          .filter(
-            (doc) => doc.categoria_general && doc.categoria_general !== noCategory
-          )
+          .filter((doc) => doc.categoria_general && doc.categoria_general !== noCategory)
           .map((doc) => {
             let nombreProceso = noName;
             let monto = 0;
@@ -104,8 +108,7 @@ export default function LicitacionesPage() {
                   .toLowerCase()
                   .replace(/\b\w/g, (c) => c.toUpperCase());
               }
-              tipoContratacion =
-                informacionBasica.procedimiento_seleccion || noContractType;
+              tipoContratacion = informacionBasica.procedimiento_seleccion || noContractType;
             } catch (error) {
               console.error("Error al parsear informacion_basica:", error);
             }
@@ -122,8 +125,7 @@ export default function LicitacionesPage() {
             try {
               const cronograma = JSON.parse(doc.cronograma || "{}");
               if (cronograma.fecha_acto_apertura) {
-                const [datePart, timePart] =
-                  cronograma.fecha_acto_apertura.split(" ");
+                const [datePart, timePart] = cronograma.fecha_acto_apertura.split(" ");
                 let [day, month, year] = datePart.split("/");
                 day = day.padStart(2, "0");
                 month = month.padStart(2, "0");
@@ -146,6 +148,9 @@ export default function LicitacionesPage() {
               tipoContratacion = typeMap[tipoContratacion] || tipoContratacion;
             }
 
+            // NUEVO: Asignamos "CABA" como jurisdiccion
+            const jurisdiccion = "CABA"; // Si más adelante tienes otras, podrías leerlo de doc.
+
             return {
               id: doc.id,
               nombre: nombreProceso,
@@ -154,13 +159,13 @@ export default function LicitacionesPage() {
               fechaApertura,
               monto,
               estado,
+              jurisdiccion, // NUEVO
             };
           })
           // Filtramos por fecha >= hoy
           .filter((licitacion) => {
             return (
-              licitacion.fechaApertura instanceof Date &&
-              licitacion.fechaApertura >= today
+              licitacion.fechaApertura instanceof Date && licitacion.fechaApertura >= today
             );
           })
           // Ordenar desc por fecha
@@ -181,7 +186,7 @@ export default function LicitacionesPage() {
     };
 
     fetchLicitaciones();
-  }, [language]); // <-- Reprocesa al cambiar idioma
+  }, [language]); // Reprocesa al cambiar idioma
 
   // Función de filtrado
   const filtrarLicitaciones = () => {
@@ -189,14 +194,26 @@ export default function LicitacionesPage() {
       const categoriaCoincide = filtroCategoria
         ? licitacion.categoria === filtroCategoria
         : true;
+
       const tipoContratacionCoincide = filtroTipoContratacion
         ? licitacion.tipoContratacion === filtroTipoContratacion
         : true;
+
       const nombreCoincide = filtroNombre
         ? licitacion.nombre.toLowerCase().includes(filtroNombre.toLowerCase())
         : true;
 
-      return categoriaCoincide && tipoContratacionCoincide && nombreCoincide;
+      // NUEVO: filtrado por jurisdiccion
+      const jurisdiccionCoincide = filtroJurisdiccion
+        ? licitacion.jurisdiccion === filtroJurisdiccion
+        : true;
+
+      return (
+        categoriaCoincide &&
+        tipoContratacionCoincide &&
+        nombreCoincide &&
+        jurisdiccionCoincide
+      );
     });
   };
 
@@ -235,7 +252,8 @@ export default function LicitacionesPage() {
           <h2 className="text-2xl font-semibold text-[#1b293f] mb-6">
             {filtersTitle}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Filtro Categoría */}
             <div>
               <label
@@ -261,7 +279,7 @@ export default function LicitacionesPage() {
               </select>
             </div>
 
-            {/* Filtro Tipo */}
+            {/* Filtro Tipo de Contratación */}
             <div>
               <label
                 htmlFor="tipoContratacion"
@@ -283,6 +301,26 @@ export default function LicitacionesPage() {
                     {tipo}
                   </option>
                 ))}
+              </select>
+            </div>
+
+            {/* NUEVO: Filtro Jurisdiccion */}
+            <div>
+              <label
+                htmlFor="jurisdiccion"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                {jurisdictionLabel}
+              </label>
+              <select
+                id="jurisdiccion"
+                value={filtroJurisdiccion}
+                onChange={(e) => setFiltroJurisdiccion(e.target.value)}
+                className="w-full px-4 py-2 rounded-md shadow-sm text-[#1b293f] bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1b293f]"
+              >
+                <option value="">{allJurisdictions}</option>
+                {/* Solo una opción: CABA */}
+                <option value="CABA">CABA</option>
               </select>
             </div>
 
