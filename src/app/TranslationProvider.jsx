@@ -13,25 +13,25 @@ const dictionary = {
       areasPractica: "Áreas de Práctica",
       licitaciones: "Licitaciones",
       contacto: "Contacto",
-      licitacionesPublicasPrivadas: "Licitaciones Públicas y/o Privadas",
+      licitacionesPublicasPrivadas: "Licitaciones Públicas y Privadas",
       proyectosConstructivos: "Desarrollo de Proyectos Constructivos",
     },
     hero: {
-      title: "Gestión de proyectos públicos y/o privados",
+      title: "Gestión de proyectos públicos y privados",
       subtitle:
-        "Brindamos asesoramiento integral en gestión de proyectos constructivos y ejecución de contrataciones públicas y/o privadas.",
+        "Brindamos asesoramiento integral en gestión de proyectos constructivos y ejecución de contrataciones públicas y privadas.",
     },
     companyOverview: {
       heading: "Innovación y calidad en consultoría",
       paragraph1:
-        "Inted es una consultora innovadora que brinda asesoramiento integral en la gestión de proyectos constructivos y en materia de licitaciones públicas y/o privadas, garantizando la celeridad y eficiencia en cada etapa del proceso.",
+        "Inted es una consultora innovadora que brinda asesoramiento integral en la gestión de proyectos constructivos y en materia de licitaciones públicas y privadas, garantizando la celeridad y eficiencia en cada etapa del proceso.",
       paragraph2:
-        "Ofrecemos un amplio rango de servicios, que abarcan la gestoría de trámites constructivos y confección de ofertas para licitaciones públicas y/o privadas. Contamos con un equipo multidisciplinario de profesionales que combina experiencia en el ámbito público/privado.",
+        "Ofrecemos un amplio rango de servicios, que abarcan la gestoría de trámites constructivos y confección de ofertas para licitaciones públicas y privadas. Contamos con un equipo multidisciplinario de profesionales que combina experiencia en el ámbito público/privado.",
       button: "Ver más",
     },
     practiceAreas: {
       heading: "Áreas de Práctica",
-      area1: "Licitaciones Públicas y/o Privadas",
+      area1: "Licitaciones Públicas y Privadas",
       area2: "Desarrollo de Proyectos Constructivos",
       verMas: "Ver más",
       services: {
@@ -60,7 +60,7 @@ const dictionary = {
     footer: {
       quickLinks: "Enlaces Rápidos",
       location: "Ubicación",
-      link1: "Licitaciones Públicas y/o Privadas",
+      link1: "Licitaciones Públicas y Privadas",
       link2: "Desarrollo de Proyectos Constructivos",
       link3: "Licitaciones Activas",
       link4: "Contacto",
@@ -73,7 +73,7 @@ const dictionary = {
     quienesSomos: {
       heroTitle: "Inted",
       heroParagraph:
-        "Somos una consultora innovadora que brinda un asesoramiento integral en el ámbito de proyectos constructivos y licitaciones públicas y/o privadas, garantizando el cumplimiento normativo en cada etapa del proceso.",
+        "Somos una consultora innovadora que brinda un asesoramiento integral en el ámbito de proyectos constructivos y licitaciones públicas y privadas, garantizando el cumplimiento normativo en cada etapa del proceso.",
       missionTitle: "Nuestra Misión",
       missionParagraph:
         "Acompañar a nuestros clientes a lo largo de las diversas instancias de su proyecto, desde la planificación hasta la ejecución, ofreciendo soluciones que se adapten a sus necesidades.",
@@ -153,9 +153,9 @@ const dictionary = {
       ],
     },
     consultoriaLicitaciones: {
-        headerTitle: "Consultoría en Licitaciones Públicas y/o Privadas",
+        headerTitle: "Consultoría en Licitaciones Públicas y Privadas",
         headerParagraph:
-          "Nuestro asesoramiento abarca todas las etapas de una licitación pública y/o privada, desde la confección de la documentación licitatoria hasta la ejecución del proyecto adjudicado.",
+          "Nuestro asesoramiento abarca todas las etapas de una licitación pública y privada, desde la confección de la documentación licitatoria hasta la ejecución del proyecto adjudicado.",
         headerImage: "/images/licitaciones.jpg",
         servicesTitle: "Nuestros Servicios",
   
