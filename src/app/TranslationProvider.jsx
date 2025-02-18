@@ -444,11 +444,11 @@ const dictionary = {
       areasPractica: "Practice Areas",
       licitaciones: "Tenders",
       contacto: "Contact",
-      licitacionesPublicasPrivadas: "Public and/or Private Tenders",
+      licitacionesPublicasPrivadas: "Public and Private Tenders",
       proyectosConstructivos: "Construction Project Development",
     },
     hero: {
-      title: "Public and/or Private Project Management",
+      title: "Public and Private Project Management",
       subtitle:
         "We provide comprehensive advice on construction project management and execution of public or private contracts.",
     },
@@ -462,7 +462,7 @@ const dictionary = {
     },
     practiceAreas: {
       heading: "Practice Areas",
-      area1: "Public and/or Private Tenders",
+      area1: "Public and Private Tenders",
       area2: "Construction Project Development",
       verMas: "View More",
       services: {
@@ -491,7 +491,7 @@ const dictionary = {
     footer: {
       quickLinks: "Quick Links",
       location: "Location",
-      link1: "Public and/or Private Tenders",
+      link1: "Public and Private Tenders",
       link2: "Construction Project Development",
       link3: "Active Tenders",
       link4: "Contact",
@@ -577,7 +577,7 @@ const dictionary = {
     },
 
     consultoriaLicitaciones: {
-        headerTitle: "Public and/or Private Tenders Consulting",
+        headerTitle: "Public and Private Tenders Consulting",
         headerParagraph:
           "Our advisory services cover all stages of a public or private tender, from drafting the bidding documents to executing the awarded project.",
         headerImage: "/images/licitaciones.jpg",
