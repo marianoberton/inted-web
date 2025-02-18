@@ -106,8 +106,8 @@ export default function LicitacionesPage() {
               if (informacionBasica.nombre_proceso) {
                 nombreProceso = informacionBasica.nombre_proceso
                   .toLowerCase()
-                  .replace(/\b\w/g, (c) => c.toUpperCase());
-              }
+                  .replace(/(^|\s)([a-záéíóúñ])/g, (_, sep, char) => sep + char.toUpperCase());
+                }
               tipoContratacion = informacionBasica.procedimiento_seleccion || noContractType;
             } catch (error) {
               console.error("Error al parsear informacion_basica:", error);
