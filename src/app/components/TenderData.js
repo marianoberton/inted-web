@@ -43,7 +43,8 @@ export default function TenderPreview() {
     if (!fechaStr) return null;
     const [datePart] = fechaStr.split(" ");
     const [day, month, year] = datePart.split("/");
-    return new Date(`${year}-${month}-${day}`);
+    // Convertir los valores a números y restar 1 al mes (ya que los meses son 0-indexados)
+    return new Date(Number(year), Number(month) - 1, Number(day));
   };
 
   const toTitleCase = (str) =>
