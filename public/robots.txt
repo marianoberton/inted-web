@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://inted.com.ar
+
+# Sitemaps
+Sitemap: https://inted.com.ar/sitemap.xml
