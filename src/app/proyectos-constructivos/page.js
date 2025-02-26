@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import CircularServiceShowcase from "../components/IconShowcase";
 
-// Importamos useTranslation
+// Importa useTranslation
 import { useTranslation } from "../TranslationProvider";
 
 // Mapeo de íconos
@@ -148,7 +148,7 @@ export default function ConsultoriaProyectosConstructivos() {
           </div>
         </motion.div>
 
-        {/* Icon Showcase Section */}
+        {/* Icon Showcase Section (componente circular) */}
         <CircularServiceShowcase />
 
         {/* Services Section */}
@@ -178,6 +178,18 @@ export default function ConsultoriaProyectosConstructivos() {
                       <h3 className="text-xl font-semibold text-white text-center">
                         {item.title}
                       </h3>
+                    </div>
+                    <div className="p-6">
+                      <ul className="space-y-2">
+                        {item.details.map((detail, idx) => (
+                          <li key={idx} className="flex items-start">
+                            <ArrowRight className="w-4 h-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
+                            <span className="text-gray-700 text-sm">
+                              {detail}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </motion.div>
                 );

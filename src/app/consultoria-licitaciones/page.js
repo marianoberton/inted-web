@@ -7,11 +7,17 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import IconShowcaseLicitaciones from "../components/IconShowcaseLicitaciones";
 
-// Importamos useTranslation
+// 1. Importamos useTranslation
 import { useTranslation } from "../TranslationProvider";
 
-// Mapeo de iconos (por nombre a componente) de lucide-react
-import { FileEdit, Briefcase, FileText, ClipboardList } from "lucide-react";
+// Mapeo de iconos (por nombre a componente). 
+// Viene de lucide-react, adaptado a tus necesidades.
+import {
+  FileEdit,
+  Briefcase,
+  FileText,
+  ClipboardList,
+} from "lucide-react";
 
 // Creamos un objeto que asocia string -> Componente
 const IconsMap = {
@@ -22,10 +28,10 @@ const IconsMap = {
 };
 
 export default function ConsultoriaLicitaciones() {
-  // Extraemos la función t()
+  // 2. Extraemos la función t() 
   const { t } = useTranslation();
 
-  // Leemos los datos de la sección consultoriaLicitaciones
+  // 3. Leemos los datos de la sección consultoriaLicitaciones
   const headerTitle = t("consultoriaLicitaciones", "headerTitle");
   const headerParagraph = t("consultoriaLicitaciones", "headerParagraph");
   const headerImage = t("consultoriaLicitaciones", "headerImage");
@@ -62,7 +68,7 @@ export default function ConsultoriaLicitaciones() {
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
 
-        {/* Open Graph para redes sociales (Facebook, LinkedIn, WhatsApp) */}
+        {/* Open Graph para redes sociales */}
         <meta property="og:title" content="Consultoría en Licitaciones Públicas y Privadas | INTED" />
         <meta property="og:description" content="Asesoramos en todas las etapas de una licitación pública o privada: inscripción de proveedores, análisis de pliegos, elaboración de ofertas, impugnaciones y ejecución de proyectos adjudicados." />
         <meta property="og:image" content="https://inted.com.ar/images/azul1.png" />
@@ -113,7 +119,6 @@ export default function ConsultoriaLicitaciones() {
         </script>
       </Head>
 
-      {/* Contenido de la página */}
       <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
         {/* Header Section */}
         <motion.div
@@ -145,7 +150,7 @@ export default function ConsultoriaLicitaciones() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
             {Array.isArray(servicios) &&
               servicios.map((item, index) => {
-                // Tomamos el icon string y buscamos el componente
+                // 4. Tomamos el icon string y buscamos el componente
                 const IconComponent = IconsMap[item.icon] || FileText;
 
                 return (
@@ -164,6 +169,18 @@ export default function ConsultoriaLicitaciones() {
                       <h3 className="text-xl font-semibold text-white text-center">
                         {item.title}
                       </h3>
+                    </div>
+                    <div className="p-6 flex items-center justify-center min-h-[160px]">
+                      <ul className="space-y-2">
+                        {item.details.map((detail, idx) => (
+                          <li key={idx} className="flex items-start">
+                            <ArrowRight className="w-4 h-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
+                            <span className="text-gray-700 text-sm">
+                              {detail}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </motion.div>
                 );
